@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BWakaBats.Bootstrap.Button&lt;TControl&gt;" Collapsed="true">
+    <Position X="5.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAECIBAAAIAAAAAAAFQBAAACAECAAA=</HashCode>
+      <FileName>Bootstrap\Button.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.CheckBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAACAAAEAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\CheckBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.DateTimePicker&lt;TControl&gt;" Collapsed="true">
+    <Position X="11" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\DateTimePicker.cs</FileName>
+      <NewMemberFileName>Controls\DatePicker.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.NumberBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="14.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\NumberBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.PasswordBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="0.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\PasswordBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.PreAppend&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="8.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAgAgAQAAAIgQBAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bootstrap\PreAppend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.RangeBase&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="14.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAgAICQgAAAAQAAIAAAgAAAAQAAAgCAAAACA=</HashCode>
+      <FileName>Bootstrap\RangeBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.TextArea&lt;TControl&gt;" Collapsed="true">
+    <Position X="5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAVAAAIAAAAAAAAAAAAAQAAAQCAAAAAA=</HashCode>
+      <FileName>Bootstrap\TextArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.TextBase&lt;TControl&gt;" Collapsed="true">
+    <Position X="3" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAARAAAAAQQAAAAAAAAAAQAAAQCAAAAAA=</HashCode>
+      <FileName>Bootstrap\TextBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.TextBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="4" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgQACQAAAAAAAAAAAAAAAAgAgAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\TextBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.TimePicker&lt;TControl&gt;" Collapsed="true">
+    <Position X="12.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\TimePicker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.Element&lt;TControl&gt;" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACABAQAgAAAQAAAIAAAAUEAAQAAAEYCAAAKAAAACA=</HashCode>
+      <FileName>Bootstrap\Element.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.FieldSet&lt;TControl&gt;" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAgiAAAAACAICAAAAAAAAAEAAAAABACAAAAAA=</HashCode>
+      <FileName>Bootstrap\FieldSet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.BoundControl&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAACABAAwAAAQiEAIAwgAAgAAAAAAEAAAACSQAAAAA=</HashCode>
+      <FileName>Bootstrap\BoundControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.DatePicker&lt;TControl&gt;" Collapsed="true">
+    <Position X="9.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\DatePicker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.InputBox&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="6.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAABQAAAAgAAEAAAAAAAAEAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\InputBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.CurrencyBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="18" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAgAIAAAAAAAAAAAAAAAAAAAAAAAACAAACAA=</HashCode>
+      <FileName>Bootstrap\CurrencyBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.CustomControl&lt;TControl&gt;" Collapsed="true">
+    <Position X="8.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAgCAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bootstrap\CustomControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.DigitBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="16.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\DigitBox .cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.Control&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgCgAQAQAAAAAAACAAAAAAEAAAAgCAAAEAA=</HashCode>
+      <FileName>Bootstrap\Control.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.Display&lt;TControl&gt;" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAgAQAEAIAAAAAAAAAAAAEQAAAgCQAAAAA=</HashCode>
+      <FileName>Bootstrap\Display.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.AjaxForm&lt;TControl&gt;" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABACAAAgAVAACAAAAAAABAAAAAAAAAKAAACAEAAAA=</HashCode>
+      <FileName>Bootstrap\AjaxForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.ColorPicker&lt;TControl&gt;" Collapsed="true">
+    <Position X="7.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAgAACQAAAAARAAAAAAAAAAAABIASCAEgAAI=</HashCode>
+      <FileName>Bootstrap\ColorPicker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.HtmlArea&lt;TControl&gt;" Collapsed="true">
+    <Position X="6.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAEAAAIAAAAAAAAAAAAAQAACACAAAAAA=</HashCode>
+      <FileName>Bootstrap\HtmlArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.IconPicker&lt;TControl&gt;" Collapsed="true">
+    <Position X="6" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAgAABAAAAAIQAAAAAAAAAAAABAAACQAgAAA=</HashCode>
+      <FileName>Bootstrap\IconPicker .cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.ListBox&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAggAAEAAAAAAAAQAAAAAAAEQAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\ListBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.RadioButton&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAiAAAAAAAAAAAAAAAACAAAEQAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\RadioButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.Form&lt;TControl&gt;" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAgiAAAAAAAIAgAAACIAAAEQAQAAAECAAAAAA=</HashCode>
+      <FileName>Bootstrap\Form.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.SelectBox&lt;TControl, TValue&gt;" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAggACggAAJAAAAAAABAAAAAQAAAAGAAhAAA=</HashCode>
+      <FileName>Bootstrap\SelectBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.FilePicker&lt;TControl&gt;" Collapsed="true">
+    <Position X="9.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAgAAAoAIAAEAAAgQAAAAAAAAAAAQAAAFCABAAAA=</HashCode>
+      <FileName>Bootstrap\FilePicker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.Grid&lt;TControl, TColumn, TRow&gt;" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIAAAAgAAiAAAEAEAIAKIgAAQAgAQgEYAAAAeAgCAAA=</HashCode>
+      <FileName>Bootstrap\Grid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.EmailBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="2.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\EmailBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.PostcodeBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="7.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAACAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\PostcodeBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.AddressBox&lt;TControl&gt;" Collapsed="true">
+    <Position X="5.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bootstrap\AddressBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BWakaBats.Bootstrap.Max&lt;TControl&gt;" Collapsed="true">
+    <Position X="11.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAEAQAEAAQAAAARAABAAAACIAAiAACAAA=</HashCode>
+      <FileName>Bootstrap\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09FCA913-9DE9-4C64-B957-CC299CEDB6CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BWakaBats</RootNamespace>
+    <AssemblyName>BWakaBats.Mvc</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">
+    </SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\BWakaBats.Extensions\Custom.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+    <CodeAnalysisRuleSet>..\BWakaBats.Extensions\Custom.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>TEST</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\BWakaBatsLibrary.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\AjaxMin.5.14.5506.26202\lib\net40\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="BWakaBats.Extensions, Version=1.0.1.0, Culture=neutral, PublicKeyToken=4ae5ccba32375821, processorArchitecture=MSIL">
+      <HintPath>packages\BWakaBats.Extensions.1.0.1\lib\net45\BWakaBats.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Device" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\DomainOnlyHttpsAttribute.cs" />
+    <Compile Include="Attributes\HtmlAttributeAttribute.cs" />
+    <Compile Include="Attributes\IDataAnnotationAttribute.cs" />
+    <Compile Include="Attributes\JsonExceptionFilterAttribute.cs" />
+    <Compile Include="Attributes\ElmahHandleErrorAttribute.cs" />
+    <Compile Include="Attributes\AppendAttribute.cs" />
+    <Compile Include="Attributes\DescriptionAttribute.cs" />
+    <Compile Include="Attributes\PrependAttribute.cs" />
+    <Compile Include="Attributes\PlaceholderAttribute.cs" />
+    <Compile Include="Attributes\TooltipAttribute.cs" />
+    <Compile Include="Bootstrap\Location.cs" />
+    <Compile Include="Bootstrap\ILocation.cs" />
+    <Compile Include="Bootstrap\ImageMap.cs" />
+    <Compile Include="Bootstrap\GeographicMap.cs" />
+    <Compile Include="Bootstrap\PostcodeBox.cs" />
+    <Compile Include="Bootstrap\AjaxForm.cs" />
+    <Compile Include="Bootstrap\AwesomeIcon.cs">
+      <DependentUpon>AwesomeIcon.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Bootstrap\AwesomeIcon_More.cs" />
+    <Compile Include="Bootstrap\BoundControl.cs" />
+    <Compile Include="Bootstrap\Button.cs" />
+    <Compile Include="Bootstrap\CheckBox.cs" />
+    <Compile Include="Bootstrap\ColorPicker.cs" />
+    <Compile Include="Bootstrap\Control.cs" />
+    <Compile Include="Bootstrap\AddressBox.cs" />
+    <Compile Include="Bootstrap\Map.cs" />
+    <Compile Include="Bootstrap\UrlBox.cs" />
+    <Compile Include="Bootstrap\CurrencyBox.cs" />
+    <Compile Include="Bootstrap\CustomControl.cs" />
+    <Compile Include="Bootstrap\DatePicker.cs" />
+    <Compile Include="Bootstrap\DateTimePicker.cs" />
+    <Compile Include="Bootstrap\DigitBox .cs" />
+    <Compile Include="Bootstrap\Display.cs" />
+    <Compile Include="Bootstrap\Element.cs" />
+    <Compile Include="Bootstrap\CreditCardBox.cs" />
+    <Compile Include="Bootstrap\EmailBox.cs" />
+    <Compile Include="Bootstrap\FieldSet.cs" />
+    <Compile Include="Bootstrap\FilePicker.cs" />
+    <Compile Include="Bootstrap\Form.cs" />
+    <Compile Include="Bootstrap\Grid.cs" />
+    <Compile Include="Bootstrap\GridColumn.cs" />
+    <Compile Include="Bootstrap\GridColumnCollection.cs" />
+    <Compile Include="Bootstrap\GridColumnPosition.cs" />
+    <Compile Include="Bootstrap\HtmlArea.cs" />
+    <Compile Include="Bootstrap\HtmlTagBuilder.cs" />
+    <Compile Include="Bootstrap\IconPicker .cs" />
+    <Compile Include="Bootstrap\IContainer.cs" />
+    <Compile Include="Bootstrap\InputBox.cs" />
+    <Compile Include="Bootstrap\IPreAppender.cs" />
+    <Compile Include="Bootstrap\ListBox.cs" />
+    <Compile Include="Bootstrap\NumberBox.cs" />
+    <Compile Include="Bootstrap\PasswordBox.cs" />
+    <Compile Include="Bootstrap\PreAppend.cs" />
+    <Compile Include="Bootstrap\PreAppenderString.cs" />
+    <Compile Include="Bootstrap\RadioButton.cs" />
+    <Compile Include="Bootstrap\RangeBase.cs" />
+    <Compile Include="Bootstrap\SelectBox.cs" />
+    <Compile Include="Bootstrap\TextArea.cs" />
+    <Compile Include="Bootstrap\TextBase.cs" />
+    <Compile Include="Bootstrap\TextBox.cs" />
+    <Compile Include="Bootstrap\TimePicker.cs" />
+    <Compile Include="Bootstrap\ValidatedTagBuilder.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions_Button.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions_Link.cs" />
+    <Compile Include="Extensions\HttpRequestBaseExtensions.cs" />
+    <Compile Include="Extensions\UrlHelperExtensions.cs" />
+    <Compile Include="Extensions\TagBuilderExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Mvc\CustomModelMetadataProvider.cs" />
+    <Compile Include="Mvc\CachedHttpHandler.cs" />
+    <Compile Include="Mvc\JSHttpHandler.cs" />
+    <Compile Include="Mvc\NamedRazorView.cs" />
+    <Compile Include="Mvc\NamedRazorViewEngine.cs" />
+    <Compile Include="Mvc\CssHttpHandler.cs" />
+    <Content Include="Configurations\FilterConfiguration.cs.pp" />
+    <Content Include="Configurations\ViewEngineConfiguration.cs.pp" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Bootstrap\AwesomeIcon.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AwesomeIcon.cs</LastGenOutput>
+    </None>
+    <None Include="Bootstrap\Controls.cd" />
+    <None Include="BWakaBats.Mvc.nuspec" />
+    <None Include="Content\fontawesome4\animated.less" />
+    <None Include="Content\fontawesome4\bordered-pulled.less" />
+    <None Include="Content\fontawesome4\core.less" />
+    <None Include="Content\fontawesome4\fixed-width.less" />
+    <None Include="Content\fontawesome4\font-awesome.css.map" />
+    <None Include="Content\fontawesome4\font-awesome.less" />
+    <None Include="Content\fontawesome4\icons.less" />
+    <None Include="Content\fontawesome4\larger.less" />
+    <None Include="Content\fontawesome4\list.less" />
+    <None Include="Content\fontawesome4\mixins.less" />
+    <None Include="Content\fontawesome4\path.less" />
+    <None Include="Content\fontawesome4\rotated-flipped.less" />
+    <None Include="Content\fontawesome4\stacked.less" />
+    <None Include="Content\fontawesome4\variables.less" />
+    <None Include="Content\fonts\fontawesome-webfont.eot" />
+    <None Include="Content\fonts\fontawesome-webfont.ttf" />
+    <None Include="Content\fonts\fontawesome-webfont.woff" />
+    <None Include="Content\fonts\fontawesome-webfont.woff2" />
+    <None Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\less\bwakabats-colorpicker.less" />
+    <Content Include="Content\less\bwakabats-filepicker.less" />
+    <Content Include="Content\less\bwakabats-grid.less" />
+    <Content Include="Content\less\bwakabats-map.less" />
+    <Content Include="Content\less\bwakabats.less" />
+    <Content Include="Content\less\leaflet.awesome-markers.less" />
+    <None Include="nugetPublish.bat" />
+    <None Include="Web.config.install.xdt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+      <Link>Properties\CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\less\bwakabats-colorpicker.png" />
+    <Content Include="Scripts\bwakabats.bootstrap-colorpicker.js" />
+    <Content Include="Scripts\bwakabats.bootstrap-filepicker.js" />
+    <Content Include="Scripts\bwakabats.bootstrap-grid.js" />
+    <Content Include="Scripts\bwakabats.bootstrap-map.js" />
+    <Content Include="Scripts\bwakabats.bootstrap-postcodebox.js" />
+    <Content Include="Scripts\bwakabats.bootstrap.js" />
+    <Content Include="Content\fontawesome4\font-awesome.css" />
+    <Content Include="Content\fontawesome4\font-awesome.min.css" />
+    <Content Include="Content\fontawesome4\___install.txt" />
+    <Content Include="Content\fontawesome4\___version.txt" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\leaflet.awesome-markers.js" />
+    <Content Include="Scripts\proj4leaflet.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

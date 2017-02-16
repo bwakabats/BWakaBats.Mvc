@@ -1,0 +1,197 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ assembly name="System.Drawing" #>
+<#@ import namespace="System.Drawing" #>
+<#@ output extension=".cs" #>
+<#
+// *****************************************************
+//               MVC EXPANSION - BOOTSTRAP
+//                  by  Shane Whitehead
+//                  bwakabats@gmail.com
+// *****************************************************
+//      The software is released under the GNU GPL:
+//          http://www.gnu.org/licenses/gpl.txt
+//
+// Feel free to use, modify and distribute this software
+// I only ask you to keep this comment intact.
+// Please contact me with bugs, ideas, modification etc.
+// *****************************************************
+    var lessFileName = Host.ResolvePath(@"..\Content\fontawesome4\font-awesome.css");
+    var lines = System.IO.File.ReadAllLines(lessFileName);
+
+    var values = new List<string>();
+    var enumNames = new List<string>();
+    var wordNames = new List<string>();
+    var classNames = new List<string>();
+    string className = "";
+    foreach(var line in lines)
+    {
+        if(line.StartsWith(".fa-") && className.Length == 0)
+        {
+            int colon = line.IndexOf(":");
+            if(colon > 5)
+            {
+                className = line.Substring(4, colon-4);
+            }
+        }
+        if(line.IndexOf("content:") > -1 && className.Length > 1)
+        {
+            if(!values.Contains(line))
+            {
+                values.Add(line);
+
+                classNames.Add("\"fa-" + className + "\"");
+
+                string wordName = className.Replace('-', ' ') + " ";
+                wordName = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(wordName);
+                wordName = wordName.Replace("O ", "Outline ");
+                wordName = wordName.Replace("Arrows V ", "Arrows Vertical ");
+                wordName = wordName.Replace("Arrows H ", "Arrows Horizontal ");
+                wordName = wordName.Replace("Facebook F ", "Facebook ");
+                wordName = wordName.Replace("Pinterest ", "Pinterest Circle ");
+                wordName = wordName.Replace("Pinterest Circle P ", "Pinterest ");
+                wordName = wordName.Replace("Bluetooth ", "Bluetooth Oval ");
+                wordName = wordName.Replace("Bluetooth Oval B ", "Bluetooth ");
+                wordName = wordName.Replace("Alt ", "Alternative ");
+                wordName = wordName.Replace("List Ul", "List Unordered");
+                wordName = wordName.Replace("List Ol", "List Ordered");
+                wordName = wordName.Replace("User Md", "User Medic");
+                wordName = wordName.Replace("H Square", "Hospital");
+                wordName = wordName.Replace("Asc ", "Ascending ");
+                wordName = wordName.Replace("Desc ", "Decending ");
+                wordName = wordName.Replace(" Cc ", " Credit Card ");
+                wordName = wordName.Replace("Cc ", "Close Caption ");
+
+                wordName = wordName.Replace("Qrcode ", "QRCode ");
+                wordName = wordName.Replace("Hdd ", "HDD ");
+                wordName = wordName.Replace("Linkedin", "LinkedIn");
+                wordName = wordName.Replace("Maxcdn", "MaxCDN");
+                wordName = wordName.Replace("Css", "CSS");
+                wordName = wordName.Replace("Gbp ", "GBP ");
+                wordName = wordName.Replace("Cny ", "CNY ");
+                wordName = wordName.Replace("Youtube ", "YouTube ");
+                wordName = wordName.Replace("Adn ", "ADN ");
+                wordName = wordName.Replace("Vk ", "VK ");
+                wordName = wordName.Replace("Openid ", "OpenID ");
+                wordName = wordName.Replace("Soundcloud ", "SoundCloud ");
+                wordName = wordName.Replace("Pdf ", "PDF ");
+                wordName = wordName.Replace("Jsfiddle ", "JSfiddle ");
+                wordName = wordName.Replace("Ra ", "RA ");
+                wordName = wordName.Replace("Ge ", "GE ");
+                wordName = wordName.Replace("Qq ", "QQ ");
+                wordName = wordName.Replace("Tty ", "TTY ");
+                wordName = wordName.Replace("Lastfm ", "LastFM ");
+                wordName = wordName.Replace("Ioxhost ", "IOX Host ");
+                wordName = wordName.Replace("Buysellads ", "BuySellAds ");
+                wordName = wordName.Replace("Connectdevelop ", "ConnectDevelop ");
+                wordName = wordName.Replace("Shirtsinbulk ", "ShirtsInBulk ");
+                wordName = wordName.Replace("Simplybuilt ", "SimplyBuilt ");
+                wordName = wordName.Replace("Skyatlas ", "SkyAtlas ");
+                wordName = wordName.Replace("Yc ", "YC ");
+                wordName = wordName.Replace("Expeditedssl ", "ExpediteDSSL ");
+                wordName = wordName.Replace("Opencart ", "OpenCart ");
+                wordName = wordName.Replace("Jcb ", "JCB ");
+                wordName = wordName.Replace("Gg ", "GG ");
+                wordName = wordName.Replace("Tripadvisor ", "TripAdvisor ");
+                wordName = wordName.Replace("Wikipedia W ", "Wikipedia ");
+                wordName = wordName.Replace("Tv ", "TV ");
+                wordName = wordName.Replace("500Px ", "500px ");
+                wordName = wordName.Replace("Usb ", "USB ");
+                wordName = wordName.Replace("Mixcloud ", "MixCloud ");
+                wordName = wordName.Replace("Fonticons ", "FontIcons ");
+                wordName = wordName.Replace("Fonticons ", "FontIcons ");
+                wordName = wordName.Replace("Fonticons ", "FontIcons ");
+                wordName = wordName.Replace("Fonticons ", "FontIcons ");
+                wordNames.Add(wordName.Trim());
+
+                string enumName = wordName;
+
+                enumName = enumName.Replace(" ", "");
+                enumName = enumName.Replace("500", "FiveHundred");
+                enumNames.Add(enumName);
+            }
+            className = "";
+        }
+    }
+    /*
+    var knownColors = Enum.GetValues(typeof(KnownColor))
+        .Cast<KnownColor>()
+        .OrderBy(c =>
+        {
+            var color = Color.FromKnownColor(c);
+            return color.GetHue() * 1000 + color.GetSaturation() * 1000 + color.GetBrightness();
+        });
+    foreach (KnownColor knownColor in knownColors)
+    {
+        var color = Color.FromKnownColor(knownColor);
+        if (color.IsSystemColor || color.A < 255)
+            continue;
+        string name = knownColor.ToString();
+        name = System.Text.RegularExpressions.Regex.Replace(name, "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])", " $1");
+        #>
+{name:"<#=name#>",h:<#=Math.Round(color.GetHue()/360,4)#>,s:<#=Math.Round(color.GetSaturation(),4)#>,l:<#=Math.Round(color.GetBrightness(),4)#>},
+        <#
+    }
+    */
+#>
+// *****************************************************
+//               MVC EXPANSION - BOOTSTRAP
+//                  by  Shane Whitehead
+//                  bwakabats@gmail.com
+// *****************************************************
+//      The software is released under the GNU GPL:
+//          http://www.gnu.org/licenses/gpl.txt
+//
+// Feel free to use, modify and distribute this software
+// I only ask you to keep this comment intact.
+// Please contact me with bugs, ideas, modification etc.
+// *****************************************************
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+
+namespace BWakaBats.Bootstrap
+{
+    [GeneratedCode("Ignore for Code Analysis", "v1")]
+    public partial class AwesomeIcon
+    {
+        <#
+        int length = enumNames.Count;
+        for(int index = 0; index < length; index++)
+        {
+        #>
+public static AwesomeIcon <#=enumNames[index]#> = new AwesomeIcon("<#=enumNames[index]#>", "<#=wordNames[index]#>", <#=classNames[index]#>);
+        <#
+        }
+        #>
+
+        public static IEnumerable<AwesomeIcon> All = new List<AwesomeIcon>()
+        {
+        <#
+        length = enumNames.Count;
+        for(int index = 0; index < length; index++)
+        {
+        #>
+    <#=enumNames[index]#>,
+        <#
+        }
+        #>
+};
+
+        private static IDictionary<string, AwesomeIcon> _lookup = new Dictionary<string, AwesomeIcon>()
+        {
+        <#
+        length = enumNames.Count;
+        for(int index = 0; index < length; index++)
+        {
+        #>
+    { "<#=enumNames[index]#>", <#=enumNames[index]#> },
+        <#
+        }
+        #>
+};
+
+    }   
+}

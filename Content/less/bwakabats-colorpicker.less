@@ -1,0 +1,118 @@
+/*
+Color Picker
+==========================================================================
+*/
+@colorpickerrow: 32px;
+@colorpickersize: @colorpickerrow*8-2;
+
+.colorpicker-popup {
+    .user-select(none);
+    display: none;
+    position: absolute;
+    top: @input-height-base;
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-fallback-border; // IE8 fallback
+    border: 1px solid @dropdown-border;
+    border-radius: @border-radius-small;
+    .box-shadow(0 5px 15px rgba(0,0,0,.1));
+    background-clip: padding-box;
+    z-index: @zindex-modal+1;
+    left: 0;
+    width: @colorpickerrow*8+8;
+    margin: 0;
+    padding: 4px 4px 0;
+
+    > .colorpicker-bottom {
+        margin-bottom: 4px;
+        text-align: center;
+
+        > .colorpicker-none {
+            float: left;
+        }
+
+        > .colorpicker-more {
+            float: right;
+        }
+    }
+
+    > .colorpicker-image {
+        background-color: #fafafa;
+        background-image: url("bwakabats-colorpicker.png");
+        background-size: 900% 1000%;
+        cursor: pointer;
+        margin-bottom: 4px;
+
+        &.colorpicker-grey {
+            height: @colorpickerrow;
+        }
+
+        &.colorpicker-hue {
+            height: @colorpickerrow;
+            background-position-y: -@colorpickerrow;
+        }
+
+        &.colorpicker-spectrum {
+            height: @colorpickersize;
+            background-position-y: -@colorpickerrow*2;
+            background-size: 900% 125%;
+        }
+    }
+
+    &.normal {
+        &.simple .colorpicker-image {
+        }
+
+        &.advanced > .colorpicker-image {
+            background-position-x: -@colorpickersize;
+        }
+
+        &.full > .colorpicker-image {
+            background-position-x: -@colorpickersize*2;
+        }
+    }
+
+    &.light {
+        &.simple > .colorpicker-image {
+            background-position-x: -@colorpickersize*3;
+        }
+
+        &.advanced > .colorpicker-image {
+            background-position-x: -@colorpickersize*4;
+        }
+
+        &.full > .colorpicker-image {
+            background-position-x: -@colorpickersize*5;
+        }
+    }
+
+    &.dark {
+        &.simple > .colorpicker-image {
+            background-position-x: -@colorpickersize*6;
+        }
+
+        &.advanced > .colorpicker-image {
+            background-position-x: -@colorpickersize*7;
+        }
+
+        &.full > .colorpicker-image {
+            background-position-x: -@colorpickersize*8;
+        }
+    }
+}
+
+.input-group-btn > .colorpicker-popup {
+    white-space: normal;
+    padding-bottom: 2px;
+    /*div {
+        margin: 2px;
+    }*/
+}
+
+.btn-colorpicker + div + span {
+    color: lighten(@text-color, 50%);
+    margin-left: 10px;
+}
+
+.open > .colorpicker-popup {
+    display: block;
+}

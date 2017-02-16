@@ -1,0 +1,40 @@
+/*
+File Picker
+==========================================================================
+*/
+.filepicker {
+    .filepicker-buttons {
+        display: inline-block;
+        margin-left: -20px;
+        vertical-align: middle;
+        width: 0;
+
+        button, .btn-group {
+            margin-bottom: 4px;
+        }
+
+        + span {
+            vertical-align: top;
+            padding-left: 160px;
+            color: lighten(@text-color, 50%);
+        }
+    }
+
+    .btn-group .btn-danger {
+        border-top-right-radius: @border-radius-base !important;
+        border-bottom-right-radius: @border-radius-base !important;
+    }
+
+    .img-preview {
+        background-color: @gray-lighter;
+        max-width: 200px;
+
+        &[src=''] + .filepicker-buttons {
+            margin-left: 0;
+        }
+    }
+}
+
+.imagePicker {
+    cursor: pointer;
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>BWakaBats MVC Helper Library</title>
+    <authors>BWakaBats</authors>
+    <owners>BWakaBats</owners>
+    <!--
+    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
+    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Changes to the Map control</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>Bootstrap MVC</tags>
+    <contentFiles>
+      <files include="Configurations\*.*" buildAction="Content" />
+      <files include="Content\less\*.*" buildAction="Content" />
+      <files include="Scripts\*.*" buildAction="Content" />
+    </contentFiles>
+    <dependencies>
+      <dependency id="Bootstrap.v3.Datetimepicker" version="4.15.35.1" />
+      <dependency id="leaflet" version="0.7.3" />
+      <dependency id="Microsoft.jQuery.Unobtrusive.Validation" version="3.2.3" />
+      <dependency id="Plupload" version="2.1.1" />
+      <dependency id="Twitter.Bootstrap.Less" version="3.3.5" />
+      <dependency id="Twitter.Typeahead" version="0.11.1" />
+      <dependency id="WebActivatorEx" version="2.0.6" />
+    </dependencies>
+  </metadata>
+  <!--<files>
+    <file src="Configurations\*.*" />
+    <file src="Content\less\*.*" />
+    <file src="Scripts\*.*" />
+    <file src="Web.config.install.xdt" target="content" />
+  </files>-->
+</package>
