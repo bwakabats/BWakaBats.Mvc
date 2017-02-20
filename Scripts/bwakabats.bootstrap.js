@@ -772,6 +772,10 @@
     {
         self.confirm(title, message || "You are about to " + title.toLowerCase() + ".", function ()
         {
+            if (typeof href === "function")
+            {
+                href();
+            }
             if (href.substring(0, 11) == "javascript:")
             {
                 eval(href);

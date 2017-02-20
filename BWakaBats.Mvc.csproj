@@ -223,7 +223,9 @@
       <LastGenOutput>AwesomeIcon.cs</LastGenOutput>
     </None>
     <None Include="Bootstrap\Controls.cd" />
-    <None Include="BWakaBats.Mvc.nuspec" />
+    <None Include="BWakaBats.Mvc.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Content\fontawesome4\animated.less" />
     <None Include="Content\fontawesome4\bordered-pulled.less" />
     <None Include="Content\fontawesome4\core.less" />
@@ -249,7 +251,6 @@
     <Content Include="Content\less\bwakabats-map.less" />
     <Content Include="Content\less\bwakabats.less" />
     <Content Include="Content\less\leaflet.awesome-markers.less" />
-    <None Include="nugetPublish.bat" />
     <None Include="Web.config.install.xdt" />
     <None Include="packages.config" />
   </ItemGroup>

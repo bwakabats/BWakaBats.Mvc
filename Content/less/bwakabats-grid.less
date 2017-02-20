@@ -121,226 +121,202 @@ Grid
             }
         }
     }
-    /*
-    Column
-    ==========================================================================
-    */
-    .col-currency,
-    .col-number,
-    .col-buttons {
-        text-align: right;
+}
+/*
+Column
+==========================================================================
+*/
+.col-currency,
+.col-number,
+.col-buttons {
+    text-align: right;
+}
+
+.col-boolean,
+.col-image {
+    text-align: center;
+}
+
+.col-percentagebar {
+    padding-left: @line-height-computed/4;
+    padding-right: @line-height-computed/4;
+
+    > .bar {
+        background: @brand-primary-light;
     }
+}
+/*
+Sorting
+==========================================================================
+*/
+.col-sort {
+    .fa-icon();
+    cursor: pointer;
+    margin-right: 4px;
+}
 
-    .col-boolean,
-    .col-image {
-        text-align: center;
+.col-sort.col-sort-none:before {
+    content: @fa-var-sort;
+}
+
+.col-sort.col-sort-ascending:before {
+    content: @fa-var-sort-amount-asc;
+}
+
+.col-sort.col-sort-descending:before {
+    content: @fa-var-sort-amount-desc;
+}
+/*
+Filtering
+==========================================================================
+*/
+.col-filter {
+    .fa-icon();
+    cursor: pointer;
+    margin-right: 4px;
+
+    &:before {
+        content: @fa-var-filter;
     }
+}
 
-    .col-percentagebar {
-        padding-left: @line-height-computed/4;
-        padding-right: @line-height-computed/4;
+.col-filter-input {
+    margin-top: 15px;
+}
+/*
+Totals
+==========================================================================
+*/
+.grid-total {
+    font-weight: bold;
+    border-top: #000 double 5px;
+    border-bottom: #000 double 5px;
+    background-color: @brand-primary-lightest;
+}
 
-        > .bar {
-            background: @brand-primary-light;
-        }
-    }
-    /*
-    Sorting
-    ==========================================================================
-    */
-    .col-sort {
-        .fa-icon();
-        cursor: pointer;
-        margin-right: 4px;
-    }
+.grid-subtotal {
+    border-top: #000 solid 2px;
+    border-bottom: #000 solid 2px;
+    background-color: @brand-primary-lightest;
+    margin-bottom: 1px;
+}
+/*
+Grouping
+==========================================================================
+*/
+.col-group {
+    .fa-icon();
+    cursor: pointer;
+    margin-right: 4px;
+}
 
-    .col-sort.col-sort-none:before {
-        content: @fa-var-sort;
-    }
+.col-group.col-group-none:before {
+    content: @fa-var-list;
+}
 
-    .col-sort.col-sort-ascending:before {
-        content: @fa-var-sort-amount-asc;
-    }
+.col-group.col-group-ascending:before {
+    content: @fa-var-indent;
+}
 
-    .col-sort.col-sort-descending:before {
-        content: @fa-var-sort-amount-desc;
-    }
-    /*
-    Filtering
-    ==========================================================================
-    */
-    .col-filter {
-        .fa-icon();
-        cursor: pointer;
-        margin-right: 4px;
+.col-group.col-group-descending:before {
+    content: @fa-var-outdent;
+}
 
-        &:before {
-            content: @fa-var-filter;
-        }
-    }
+.grid-group {
+    cursor: pointer;
+    background: @brand-primary-lighter;
+    color: white;
+    font-size: 1.5em;
 
-    .col-filter-input {
-        margin-top: 15px;
-    }
-    /*
-    Totals
-    ==========================================================================
-    */
-    .grid-total {
-        font-weight: bold;
-        border-top: #000 double 5px;
-        border-bottom: #000 double 5px;
-        background-color: @brand-primary-lightest;
-    }
+    &.grid-group-expanded {
+        div {
+            cursor: pointer;
+            margin-right: 4px;
 
-    .grid-subtotal {
-        border-top: #000 solid 2px;
-        border-bottom: #000 solid 2px;
-        background-color: @brand-primary-lightest;
-        margin-bottom: 1px;
-    }
-    /*
-    Grouping
-    ==========================================================================
-    */
-    .col-group {
-        .fa-icon();
-        cursor: pointer;
-        margin-right: 4px;
-    }
-
-    .col-group.col-group-none:before {
-        content: @fa-var-list;
-    }
-
-    .col-group.col-group-ascending:before {
-        content: @fa-var-indent;
-    }
-
-    .col-group.col-group-descending:before {
-        content: @fa-var-outdent;
-    }
-
-    .grid-group {
-        cursor: pointer;
-        background: @brand-primary-lighter;
-        color: white;
-        font-size: 1.5em;
-
-        &.grid-group-expanded {
-            div {
-                cursor: pointer;
-                margin-right: 4px;
-
-                &:before {
-                    .fa-icon();
-                    content: @fa-var-chevron-circle-down;
-                }
-            }
-        }
-
-        &.grid-group-collapsed {
-            div {
-                cursor: pointer;
-                margin-right: 4px;
-
-                &:before {
-                    .fa-icon();
-                    content: @fa-var-chevron-circle-right;
-                }
+            &:before {
+                .fa-icon();
+                content: @fa-var-chevron-circle-down;
             }
         }
     }
 
-    .grid-group-hide {
-        &:extend(.hide);
-    }
-    /*
-    Cells
-    ==========================================================================
-    */
-    .bordered-cell {
-        height: 34px;
-        border: 3px solid @brand-primary;
-        border-radius: @border-radius-large;
-    }
-    /*
-    Switch Items
-    ==========================================================================
-    */
-    .switch {
-        background: #206;
+    &.grid-group-collapsed {
+        div {
+            cursor: pointer;
+            margin-right: 4px;
 
-        .cell {
-            padding-top: (@grid-gutter-width / 2);
-        }
-
-        a {
-            color: #fff !important;
+            &:before {
+                .fa-icon();
+                content: @fa-var-chevron-circle-right;
+            }
         }
     }
-    /*
-    Moveable
-    ==========================================================================
-    */
-    &.grid-moveable {
-        [data-rowid] {
-            position: relative;
+}
+
+.grid-group-hide {
+    &:extend(.hide);
+}
+/*
+Moveable
+==========================================================================
+*/
+&.grid-moveable {
+    [data-rowid] {
+        position: relative;
+
+        &:hover {
+            > .grid-move-bar {
+                display: inline-block;
+            }
+        }
+
+        > .grid-move-bar {
+            display: none;
+            position: absolute;
+            left: -24px;
+            padding: 0;
+            margin: 5px;
+            z-index: 1;
+            background: #fff;
 
             &:hover {
-                > .grid-move-bar {
-                    display: inline-block;
+
+                > .grid-move-btn {
+                    display: inline-block !important;
                 }
             }
 
-            > .grid-move-bar {
-                display: none;
-                position: absolute;
-                left: -24px;
-                padding: 0;
-                margin: 5px;
-                z-index: 1;
-                background: #fff;
+            > .grid-move-btn {
+                width: 32px;
 
-                &:hover {
-
-                    > .grid-move-btn {
-                        display: inline-block !important;
-                    }
+                &.grid-drag {
                 }
 
-                > .grid-move-btn {
-                    width: 32px;
+                &.grid-move-top {
+                    display: none;
+                }
 
-                    &.grid-drag {
-                    }
+                &.grid-move-bottom {
+                    display: none;
+                }
 
-                    &.grid-move-top {
-                        display: none;
-                    }
+                &.grid-move-up {
+                    display: none;
+                }
 
-                    &.grid-move-bottom {
-                        display: none;
-                    }
-
-                    &.grid-move-up {
-                        display: none;
-                    }
-
-                    &.grid-move-down {
-                        display: none;
-                    }
+                &.grid-move-down {
+                    display: none;
                 }
             }
         }
+    }
 
-        &.dragging .drag-over {
-            border: black 1px dashed;
-            background: #ccf !important;
+    &.dragging .drag-over {
+        border: black 1px dashed;
+        background: #ccf !important;
 
-            * {
-                pointer-events: none;
-            }
+        * {
+            pointer-events: none;
         }
     }
 }

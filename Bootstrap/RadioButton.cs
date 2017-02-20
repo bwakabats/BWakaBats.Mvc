@@ -10,10 +10,10 @@
 // I only ask you to keep this comment intact.
 // Please contact me with bugs, ideas, modification etc.
 // *****************************************************
+using BWakaBats.Extensions;
 using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using BWakaBats.Extensions;
 
 namespace BWakaBats.Bootstrap
 {
@@ -67,6 +67,14 @@ namespace BWakaBats.Bootstrap
             if (!string.IsNullOrWhiteSpace(id) && !Context.AllowMultiple)
             {
                 label.Attributes.Add("for", id);
+            }
+            if (Context.IsHidden)
+            {
+                label.MergeAttribute("style", "display: none;", true);
+            }
+            if (Context.IsInvisible)
+            {
+                label.AddCssClass("invisible");
             }
             label.InnerHtml = tag.ToString() + Context.Header;
 
