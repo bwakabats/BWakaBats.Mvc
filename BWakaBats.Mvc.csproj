@@ -276,6 +276,7 @@
     <Content Include="Content\fontawesome4\___version.txt" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\leaflet.awesome-markers.js" />
+    <Content Include="Scripts\proj4.js" />
     <Content Include="Scripts\proj4leaflet.js" />
   </ItemGroup>
   <ItemGroup />

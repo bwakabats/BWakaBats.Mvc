@@ -112,13 +112,13 @@ namespace BWakaBats.Bootstrap
             if (header != null)
             {
                 requiresContainer = true;
-                if (string.IsNullOrWhiteSpace(FullHtmlFieldName))
+                if (string.IsNullOrWhiteSpace(Context.Id))
                 {
                     output += "<label>";
                 }
                 else
                 {
-                    output += "<label for='" + FullHtmlFieldName + "'>";
+                    output += "<label for='" + Context.Id + "'>";
                 }
                 output += header + "</label>";
             }

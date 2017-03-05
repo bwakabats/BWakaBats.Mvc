@@ -184,7 +184,7 @@ namespace BWakaBats.Bootstrap
                 + " <span class='caret'></span>"
                 + "</button>"
                 + GeneratePopup(id, (Context.IsRequired ? null : (Context.OptionalLabel ?? "(none)")), Context.OnClick)
-                + "<span id='" + FullHtmlFieldName + "_IconName'>"
+                + "<span id='" + Context.Id + "_IconName'>"
                 + GeneratePlaceholder()
                 + "</span>";
 

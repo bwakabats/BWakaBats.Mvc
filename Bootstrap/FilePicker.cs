@@ -100,11 +100,15 @@ namespace BWakaBats.Bootstrap
 
         protected override string WrapTag(TagBuilder tag)
         {
+            string imageId = Context.Id + "_Image";
             string imageName = FullHtmlFieldName + "_Image";
             var img = new HtmlTagBuilder("img");
+            if (!string.IsNullOrWhiteSpace(imageId))
+            {
+                img.Attributes.Add("id", imageId);
+            }
             if (!string.IsNullOrWhiteSpace(imageName))
             {
-                img.Attributes.Add("id", imageName);
                 img.Attributes.Add("name", imageName);
             }
             img.Attributes.Add("src", Context.FileName);
@@ -127,7 +131,7 @@ namespace BWakaBats.Bootstrap
             {
                 Button(Context.FileType == FilePickerContext.ImageFileType ? "Add Image" : "Add File");
             }
-            var button = Context.Button.Id(FullHtmlFieldName + "_Button");
+            var button = Context.Button.Id(Context.Id + "_Button");
             var htmlAttributes = (IDictionary<string, object>)HtmlHelper.AnonymousObjectToHtmlAttributes(button.Context.HtmlAttributes);
             AdditionalButtonAttributes(htmlAttributes);
             button.HtmlAttributes(htmlAttributes);
@@ -145,7 +149,7 @@ namespace BWakaBats.Bootstrap
                 output += "    <span class='input-group-btn'>"
                         + "      <button"
                         + "        type='button' class='btn btn-success'"
-                        + "        data-file-rotate-for='" + FullHtmlFieldName + "'"
+                        + "        data-file-rotate-for='" + Context.Id + "'"
                         + "        data-file-url='" + UrlHelper.Action("RotateLeft", Context.ControllerName, new { id = "_ID_" }) + "'"
                         + "        title='Rotate image anti-clockwise'>"
                         + "<span class='fa fa-rotate-left'></span>"
@@ -154,7 +158,7 @@ namespace BWakaBats.Bootstrap
                         + "    <span class='input-group-btn'>"
                         + "      <button"
                         + "        type='button' class='btn btn-success'"
-                        + "        data-file-rotate-for='" + FullHtmlFieldName + "'"
+                        + "        data-file-rotate-for='" + Context.Id + "'"
                         + "        data-file-url='" + UrlHelper.Action("RotateRight", Context.ControllerName, new { id = "_ID_" }) + "'"
                         + "        title='Rotate image clockwise'>"
                         + "<span class='fa fa-rotate-right'></span>"
@@ -166,13 +170,13 @@ namespace BWakaBats.Bootstrap
                 output += "    <span class='input-group-btn'>"
                         + "      <button"
                         + "        type='button' class='btn btn-success'"
-                        + "        data-file-crop-for='" + FullHtmlFieldName + "'"
+                        + "        data-file-crop-for='" + Context.Id + "'"
                         + "        data-file-url='" + UrlHelper.Action("Crop", Context.ControllerName) + "'"
                         + "        title='Crop image'>"
                         + "<span class='fa fa-crop'></span>"
                         + "      </button>"
                         + "    </span>"
-                        + "<input id='" + FullHtmlFieldName + "_Crop' name='" + FullHtmlFieldName + "_Crop' type='hidden' />";
+                        + "<input id='" + Context.Id + "_Crop' name='" + Context.Id + "_Crop' type='hidden' />";
             }
             output += GetPreAppendString(Context.Append).ToString();
 
@@ -181,7 +185,7 @@ namespace BWakaBats.Bootstrap
                 output += "    <span class='input-group-btn'>"
                         + "      <button"
                         + "        type='button' class='btn btn-danger'"
-                        + "        data-file-cancel-for='" + FullHtmlFieldName + "'"
+                        + "        data-file-cancel-for='" + Context.Id + "'"
                         + "        data-file-type='" + Context.FileType + "'"
                         + "        title='Delete'>"
                         + "<span class='fa fa-trash-o'></span>"
@@ -193,13 +197,13 @@ namespace BWakaBats.Bootstrap
                 output += "    </div>"; // btn-group
             }
             output += "  </div>" // filepicker-buttons
-                    + "  <span id='" + FullHtmlFieldName + "_FileName'>"
+                    + "  <span id='" + Context.Id + "_FileName'>"
                     + GeneratePlaceholder()
                     + "</span>"
-                    + "  <div id='" + FullHtmlFieldName + "_ProgressContainer'>"
-                    + "    <div id='" + FullHtmlFieldName + "_ProgressPercent'>100%</div>"
+                    + "  <div id='" + Context.Id + "_ProgressContainer'>"
+                    + "    <div id='" + Context.Id + "_ProgressPercent'>100%</div>"
                     + "    <div class='progress progress-striped active'>"
-                    + "      <div id='" + FullHtmlFieldName + "_Progress' class='progress-bar' role='progressbar'></div>"
+                    + "      <div id='" + Context.Id + "_Progress' class='progress-bar' role='progressbar'></div>"
                     + "    </div>" // progress
                     + "  </div>" // ProgressContainer
                     + "</div>"; // filepicker
@@ -209,7 +213,7 @@ namespace BWakaBats.Bootstrap
 
         protected virtual void AdditionalButtonAttributes(IDictionary<string, object> htmlAttributes)
         {
-            htmlAttributes.Add("data-file-for", FullHtmlFieldName);
+            htmlAttributes.Add("data-file-for", Context.Id);
             string url = UrlHelper.Action(Context.ActionName, Context.ControllerName);
             htmlAttributes.Add("data-file-url", url);
             htmlAttributes.Add("data-file-type", Context.FileType);

@@ -177,7 +177,7 @@ namespace BWakaBats.Bootstrap
                 + hex
                 + "</div>"
                 + "</div>"
-                + "<span id='" + FullHtmlFieldName + "_ColorName'>"
+                + "<span id='" + id + "_ColorName'>"
                 + GeneratePlaceholder()
                 + "</span>";
 
