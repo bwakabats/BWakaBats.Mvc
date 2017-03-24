@@ -416,6 +416,7 @@ Multi-Columns
 }
 /*
 Standard Colors and Backgrounds
+==========================================================================
 */
 .colorAndBg(primary; @brand-primary);
 .colorAndBg(success; @brand-success);
@@ -458,6 +459,22 @@ Other
 
 .form-control-static {
   margin-bottom: @form-group-margin-bottom;
+}
+
+.nav.nav-tabs.squeeze {
+    padding: 0 0 0 10px;
+
+    > li {
+        > a {
+            padding: 10px 6px;
+            margin: 0;
+        }
+
+        &.active > a {
+            padding: 10px 10px;
+            margin: 0 -5px;
+        }
+    }
 }
 
 /*

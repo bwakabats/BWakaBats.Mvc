@@ -187,7 +187,7 @@ namespace BWakaBats.Bootstrap
                     int order;
                     if (metadataDictionary.TryGetValue(kv.Key, out metadata))
                     {
-                        key = metadata.DisplayName;
+                        key = metadata.DisplayName ?? kv.Key;
                         order = metadata.Order;
                     }
                     else

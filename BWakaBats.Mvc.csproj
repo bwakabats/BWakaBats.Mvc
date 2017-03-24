@@ -27,7 +27,7 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\BWakaBats.Extensions\Custom.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Custom.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -39,13 +39,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>
-    </CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Custom.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
     <OutputPath>bin\Test\</OutputPath>
-    <CodeAnalysisRuleSet>..\BWakaBats.Extensions\Custom.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Custom.ruleset</CodeAnalysisRuleSet>
     <DefineConstants>TEST</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RunCodeAnalysis>true</RunCodeAnalysis>
@@ -251,30 +250,99 @@
     <Content Include="Content\less\bwakabats-map.less" />
     <Content Include="Content\less\bwakabats.less" />
     <Content Include="Content\less\leaflet.awesome-markers.less" />
+    <None Include="Custom.ruleset">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.config.install.xdt" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
-      <Link>Properties\CustomDictionary.xml</Link>
-    </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\less\bwakabats-colorpicker.png" />
+    <Content Include="Images\htmlbox\default\about.gif" />
+    <Content Include="Images\htmlbox\default\blank.gif" />
+    <Content Include="Images\htmlbox\default\bold.gif" />
+    <Content Include="Images\htmlbox\default\br.gif" />
+    <Content Include="Images\htmlbox\default\center.gif" />
+    <Content Include="Images\htmlbox\default\code.gif" />
+    <Content Include="Images\htmlbox\default\copy.gif" />
+    <Content Include="Images\htmlbox\default\cut.gif" />
+    <Content Include="Images\htmlbox\default\hr.gif" />
+    <Content Include="Images\htmlbox\default\image.gif" />
+    <Content Include="Images\htmlbox\default\indent.gif" />
+    <Content Include="Images\htmlbox\default\italic.gif" />
+    <Content Include="Images\htmlbox\default\justify.gif" />
+    <Content Include="Images\htmlbox\default\left.gif" />
+    <Content Include="Images\htmlbox\default\link.gif" />
+    <Content Include="Images\htmlbox\default\new.gif" />
+    <Content Include="Images\htmlbox\default\ol.gif" />
+    <Content Include="Images\htmlbox\default\open.gif" />
+    <Content Include="Images\htmlbox\default\outdent.gif" />
+    <Content Include="Images\htmlbox\default\paragraph.gif" />
+    <Content Include="Images\htmlbox\default\paste.gif" />
+    <Content Include="Images\htmlbox\default\quote.gif" />
+    <Content Include="Images\htmlbox\default\redo.gif" />
+    <Content Include="Images\htmlbox\default\removeformat.gif" />
+    <Content Include="Images\htmlbox\default\right.gif" />
+    <Content Include="Images\htmlbox\default\save.gif" />
+    <Content Include="Images\htmlbox\default\strike.gif" />
+    <Content Include="Images\htmlbox\default\striptags.gif" />
+    <Content Include="Images\htmlbox\default\sub.gif" />
+    <Content Include="Images\htmlbox\default\sup.gif" />
+    <Content Include="Images\htmlbox\default\ul.gif" />
+    <Content Include="Images\htmlbox\default\underline.gif" />
+    <Content Include="Images\htmlbox\default\undo.gif" />
+    <Content Include="Images\htmlbox\default\unlink.gif" />
+    <Content Include="Images\htmlbox\separator.gif" />
+    <Content Include="Images\htmlbox\silk\about.png" />
+    <Content Include="Images\htmlbox\silk\bold.png" />
+    <Content Include="Images\htmlbox\silk\center.png" />
+    <Content Include="Images\htmlbox\silk\code.png" />
+    <Content Include="Images\htmlbox\silk\copy.png" />
+    <Content Include="Images\htmlbox\silk\cut.png" />
+    <Content Include="Images\htmlbox\silk\hr.png" />
+    <Content Include="Images\htmlbox\silk\image.png" />
+    <Content Include="Images\htmlbox\silk\indent.png" />
+    <Content Include="Images\htmlbox\silk\italic.png" />
+    <Content Include="Images\htmlbox\silk\justify.png" />
+    <Content Include="Images\htmlbox\silk\left.png" />
+    <Content Include="Images\htmlbox\silk\link.png" />
+    <Content Include="Images\htmlbox\silk\new.png" />
+    <Content Include="Images\htmlbox\silk\ol.png" />
+    <Content Include="Images\htmlbox\silk\open.png" />
+    <Content Include="Images\htmlbox\silk\outdent.png" />
+    <Content Include="Images\htmlbox\silk\page.png" />
+    <Content Include="Images\htmlbox\silk\paragraph.png" />
+    <Content Include="Images\htmlbox\silk\paragraph1.png" />
+    <Content Include="Images\htmlbox\silk\paste.png" />
+    <Content Include="Images\htmlbox\silk\quote.png" />
+    <Content Include="Images\htmlbox\silk\redo.png" />
+    <Content Include="Images\htmlbox\silk\removeformat.png" />
+    <Content Include="Images\htmlbox\silk\right.png" />
+    <Content Include="Images\htmlbox\silk\save.png" />
+    <Content Include="Images\htmlbox\silk\strike.png" />
+    <Content Include="Images\htmlbox\silk\striptags.png" />
+    <Content Include="Images\htmlbox\silk\sub.png" />
+    <Content Include="Images\htmlbox\silk\sup.png" />
+    <Content Include="Images\htmlbox\silk\ul.png" />
+    <Content Include="Images\htmlbox\silk\underline.png" />
+    <Content Include="Images\htmlbox\silk\undo.png" />
+    <Content Include="Images\htmlbox\silk\unlink.png" />
+    <CodeAnalysisDictionary Include="Properties\CustomDictionary.xml" />
     <Content Include="Scripts\bwakabats.bootstrap-colorpicker.js" />
     <Content Include="Scripts\bwakabats.bootstrap-filepicker.js" />
     <Content Include="Scripts\bwakabats.bootstrap-grid.js" />
     <Content Include="Scripts\bwakabats.bootstrap-map.js" />
     <Content Include="Scripts\bwakabats.bootstrap-postcodebox.js" />
     <Content Include="Scripts\bwakabats.bootstrap.js" />
-    <Content Include="Content\fontawesome4\font-awesome.css" />
-    <Content Include="Content\fontawesome4\font-awesome.min.css" />
-    <Content Include="Content\fontawesome4\___install.txt" />
-    <Content Include="Content\fontawesome4\___version.txt" />
-    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <None Include="Content\fontawesome4\font-awesome.css" />
+    <None Include="Content\fontawesome4\font-awesome.min.css" />
+    <None Include="Content\fontawesome4\___install.txt" />
+    <None Include="Content\fontawesome4\___version.txt" />
+    <None Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\htmlbox.full.js" />
     <Content Include="Scripts\leaflet.awesome-markers.js" />
     <Content Include="Scripts\proj4.js" />
     <Content Include="Scripts\proj4leaflet.js" />

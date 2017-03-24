@@ -502,7 +502,6 @@ var BootstrapGrid = function ($element)
         $firstRow.find(".grid-move-top, .grid-move-up").prop("disabled", true);
         $lastRow.find(".grid-move-bottom, .grid-move-down").prop("disabled", true);
 
-
         $element.find(".grid-drag")
             .prop("draggable", true)
             .on("dragstart", function ()
@@ -511,7 +510,6 @@ var BootstrapGrid = function ($element)
                 var $row = $(this).closest(".row");
                 draggingId = $row.data("rowid");
                 draggingGroupId = (self.settings.groupColumn == -1 ? undefined : $row.data("groupid"));
-                console.log("dragstart: " + draggingGroupId);
                 $row.addClass("dragging");
                 $element.addClass('dragging');
             })

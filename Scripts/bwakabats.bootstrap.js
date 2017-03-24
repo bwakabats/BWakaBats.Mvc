@@ -131,22 +131,37 @@
             {
                 var $this = $(this);
                 var jParent = $this.parent();
-
-                var htmlbox = $this.htmlbox({
-                    toolbars: [
+                var toolbars;
+                switch ($this.data("html"))
+                {
+                    case "Minimum":
+                        toolbars = [
+                            [
+                                "separator", "bold", "italic", "underline",
+                                "separator", "left", "center", "right", "justify",
+                            ],
+                        ]
+                        break;
+                    default:
+                        toolbars = [
                         [
                             "separator", "cut", "copy", "paste",
                             "separator", "undo", "redo",
                             "separator", "bold", "italic", "underline", "strike",
-                            "separator", "left", "center", "right", "justify"
+                                "separator", "left", "center", "right", "justify",
                         ],
                         [
                             "separator", "ol", "ul", "indent", "outdent",
-                            "separator", "hr", "paragraph",
+                                "separator", , "hr", "paragraph",
                             "separator", "link", "unlink",
-                            "separator", "formats"
-                        ]
+                                "separator", "formats",
                     ],
+                        ]
+                        break;
+                }
+
+                var htmlbox = $this.htmlbox({
+                    toolbars: toolbars,
                     about: false,
                     idir: urlRoot + "Images/htmlbox/",
                     css: "body{font-family:'Segoe UI', Tahoma, sans-serif;}",
@@ -824,24 +839,30 @@ var utilities = new BootstrapUtilities();
 
 jQuery.fn.reverse = [].reverse;
 
-var navbarAutocollapse = function () { };
+var navbarCollapse = function () { };
 var navbarAutocollapseDelay;
 var navbarAutocollapseRepeat = 0;
+var navbarAutocollapseLongDelay;
 
 $(document).ready(function ()
 {
-    var $collapsibles = $(".navbar .autocollapse, .navbar .autocollapseImportant");
+    var $collapsibles = $(".navbar .autocollapse, .navbar .autocollapseImportant, .nav-tabs .autocollapse, .nav-tabs .autocollapseImportant, .autocollapsebar .autocollapse, .autocollapsebar .autocollapseImportant");
     if ($collapsibles.length > 0)
     {
-        navbarAutocollapse = function (delay, repeat)
+        navbarCollapse = function ()
         {
-            $(".navbar .autocollapse, .navbar .autocollapseImportant").show();
+            $(".navbar .autocollapse, .navbar .autocollapseImportant, .nav-tabs .autocollapse, .nav-tabs .autocollapseImportant, .autocollapsebar .autocollapse, .autocollapsebar .autocollapseImportant").show();
+            var $navbars = $(".navbar, .nav-tabs, .autocollapsebar");
+            $navbars.removeClass("squeeze");
             if (!$(".navbar-toggle").is(':visible'))
             {
-                var $navbars = $(".navbar");
                 $navbars.each(function ()
                 {
                     var $navbar = $(this);
+                    if ($navbar.height() > 75)
+                    {
+                        $navbars.addClass("squeeze");
+                    }
                     var $collapsibles = $navbar.find(".autocollapse").reverse();
                     $collapsibles.each(function ()
                     {
@@ -868,22 +889,28 @@ $(document).ready(function ()
                     });
                 });
             }
+        };
+
+        var navbarAutocollapse = function (delay, repeat, longDelay)
+        {
+            navbarCollapse();
             if (delay != undefined)
             {
                 navbarAutocollapseDelay = delay;
                 navbarAutocollapseRepeat = repeat;
+                navbarAutocollapseLongDelay = longDelay;
             }
             navbarAutocollapseRepeat--;
             if (navbarAutocollapseRepeat <= 0)
             {
-                navbarAutocollapseDelay = 2000;
+                navbarAutocollapseDelay = navbarAutocollapseLongDelay;
                 navbarAutocollapseRepeat = 100000;
             }
             setTimeout(navbarAutocollapse, navbarAutocollapseDelay);
         };
 
         $(window).resize(navbarAutocollapse);
-        navbarAutocollapse(50, 10);
+        navbarAutocollapse(50, 10, 250);
     }
 
     if (navigator.userAgent.match(/IEMobile\/10\.0/))

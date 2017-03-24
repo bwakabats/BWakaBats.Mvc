@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Dictionary>
+  <Words>
+    <Unrecognized>
+    </Unrecognized>
+    <Recognized>
+      <Word>Waka</Word>
+      <Word>Centroid</Word>
+      <Word>Defuzzification</Word>
+      <Word>Zadeh</Word>
+      <Word>Lukasiewicz</Word>
+      <Word>Goguen</Word>
+      <Word>Defuzzify</Word>
+      <Word>Inferencing</Word>
+      <Word>Registrable</Word>
+      <Word>Modelable</Word>
+      <Word>Mvvm</Word>
+      <Word>Mvc</Word>
+      <Word>Pluralise</Word>
+      <Word>Singularise</Word>
+      <Word>paginator</Word>
+      <Word>Incompleted</Word>
+      <Word>Glyphicon</Word>
+      <Word>Glyphicons</Word>
+      <Word>Soundex</Word>
+      <Word>Elmah</Word>
+      <Word>Hdd</Word>
+      <Word>Groupable</Word>
+      <Word>Appender</Word>
+      <Word>Appenders</Word>
+      <Word>Wikiname</Word>
+      <Word>Wikinamez</Word>
+      <Word>Api</Word>
+    </Recognized>
+    <Deprecated>
+    </Deprecated>
+    <Inappropriate>
+    </Inappropriate>
+    <Compound>
+      <Term CompoundAlternate="MinOr">minor</Term>
+      <Term CompoundAlternate="ToPre">topre</Term>
+    </Compound>
+  </Words>
+  <Acronyms>
+    <CasingExceptions>
+      <Acronym>IDE</Acronym>
+    </CasingExceptions>
+  </Acronyms>
+</Dictionary>
