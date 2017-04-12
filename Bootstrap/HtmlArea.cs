@@ -17,10 +17,24 @@ using System.Web.Mvc;
 
 namespace BWakaBats.Bootstrap
 {
-    public enum HtmlAreaToolBar
+    [Flags]
+    public enum HtmlAreaToolBars
     {
-        Full,
-        Minimum,
+        None = 0,
+        Justification = 1,
+        Style = 2,
+        Simple = Style | Justification,
+        CopyPaste = 4,
+        Undo = 8,
+        Indents = 16,
+        Paragraph = 32,
+        Links = 64,
+        Format = 128,
+        Common = Simple | CopyPaste | Undo | Indents | Paragraph | Links | Format,
+        Font = 256,
+        StylePlus = 512,
+        Code = 1024,
+        All = Common | Font | StylePlus | Code,
     }
 
     public abstract class HtmlArea<TControl> : InputBox<TControl, string>
@@ -37,9 +51,9 @@ namespace BWakaBats.Bootstrap
 
         #region Control Properties
 
-        public TControl ToolBar(HtmlAreaToolBar newValue)
+        public TControl ToolBar(HtmlAreaToolBars newValue)
         {
-            Context.ToolBar = newValue;
+            Context.ToolBars = newValue;
             return (TControl)this;
         }
 
@@ -60,7 +74,7 @@ namespace BWakaBats.Bootstrap
         {
             tag.InnerHtml = Context.Value;
             tag.MergeIfAttribute("rows", Context.Rows, Context.Rows != 2);
-            tag.MergeAttribute("data-html", Context.ToolBar.ToString());
+            tag.MergeAttribute("data-html", Context.ToolBars.ToString());
             return base.UpdateTag(tag);
         }
 
@@ -72,7 +86,7 @@ namespace BWakaBats.Bootstrap
 
     public class HtmlAreaContext : InputBoxContext<string>
     {
-        public HtmlAreaToolBar ToolBar { get; internal set; }
+        public HtmlAreaToolBars ToolBars { get; internal set; } = HtmlAreaToolBars.Common;
         public int Rows { get; internal set; }
     }
 

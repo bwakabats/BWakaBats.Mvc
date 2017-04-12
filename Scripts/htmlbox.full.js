@@ -148,7 +148,8 @@
             // Updating the textarea component, so whenever it is posted it will send all the data
             if ($("#" + d.id).is(":visible") === false)
             {
-                var html = $("#1" + d.id).is(":visible") ? $("#" + d.id).val() : html = d.iframe.contentWindow.document.body.innerHTML;
+                //var html = $("#1" + d.id).is(":visible") ? $("#" + d.id).val() : html = d.iframe.contentWindow.document.body.innerHTML;
+                var html = $("#" + d.id).is(":visible") ? $("#" + d.id).val() : d.iframe.contentWindow.document.body.innerHTML;
                 html = (typeof getXHTML === 'function') ? getXHTML(html) : html;
                 $("#" + d.id).val(html);
                 if (urm) { urm.add(html); } // Undo Redo
@@ -169,7 +170,8 @@
         var keyup = function (e)
         {
             // Updating the textarea component, so whenever it is posted it will send all the data
-            var html = $("#1" + d.id).is(":visible") ? $("#" + d.id).val() : html = d.iframe.contentWindow.document.body.innerHTML;
+            //var html = $("#1" + d.id).is(":visible") ? $("#" + d.id).val() : html = d.iframe.contentWindow.document.body.innerHTML;
+            var html = $("#" + d.id).is(":visible") ? $("#" + d.id).val() : d.iframe.contentWindow.document.body.innerHTML;
             if (urm) { urm.add(html); } // Undo Redo
             html = (typeof getXHTML === 'function') ? getXHTML(html) : html;
             $("#" + d.id).val(html);
@@ -715,7 +717,16 @@
                 if ($.browser.mozilla || $.browser.safari)
                 {
                     //if($.trim(text)===""){text="&nbsp;";}
-                    d.idoc.open('text/html', 'replace'); d.idoc.write(text); d.idoc.close();
+                    d.idoc.open('text/html', 'replace');
+                    d.idoc.write(text);
+                    d.idoc.close();
+                    if (d.idoc.attachEvent)
+                    {
+                        d.idoc.attachEvent("onkeyup", keyup);
+                    } else
+                    {
+                        d.idoc.addEventListener("keyup", keyup, false);
+                    }
                 } else
                 {
                     d.idoc.body.innerHTML = "";

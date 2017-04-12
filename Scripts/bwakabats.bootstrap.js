@@ -130,63 +130,150 @@
             $container.find("textarea[data-html]").each(function ()
             {
                 var $this = $(this);
-                var jParent = $this.parent();
-                var toolbars;
-                switch ($this.data("html"))
+                var $parent = $this.parent();
+
+                var flags = $this.data("html") + ", ";
+                flags = flags.replace("All", "Common, Font, StylePlus, Code");
+                flags = flags.replace("Common", "Simple, CopyPaste, Undo, Indents, Paragraph, Links, Format");
+                flags = flags.replace("Simple", "Style, Justification");
+
+                var toolbars = [];
+                var toolbar = null;
+                if (flags.indexOf("Style, ") > -1)
                 {
-                    case "Minimum":
-                        toolbars = [
-                            [
-                                "separator", "bold", "italic", "underline",
-                                "separator", "left", "center", "right", "justify",
-                            ],
-                        ]
-                        break;
-                    default:
-                        toolbars = [
-                        [
-                            "separator", "cut", "copy", "paste",
-                            "separator", "undo", "redo",
-                            "separator", "bold", "italic", "underline", "strike",
-                                "separator", "left", "center", "right", "justify",
-                        ],
-                        [
-                            "separator", "ol", "ul", "indent", "outdent",
-                                "separator", , "hr", "paragraph",
-                            "separator", "link", "unlink",
-                                "separator", "formats",
-                    ],
-                        ]
-                        break;
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "bold", "italic", "underline");
                 }
+                if (flags.indexOf("StylePlus, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "strike", "sub", "sup");
+                }
+                if (flags.indexOf("Justification, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "left", "center", "right", "justify");
+                }
+                if (flags.indexOf("CopyPaste, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "cut", "copy", "paste");
+                }
+                toolbar = null;
+
+                if (flags.indexOf("Undo, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "undo", "redo");
+                }
+                if (flags.indexOf("Indents, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "ol", "ul", "indent", "outdent");
+                }
+                if (flags.indexOf("Paragraph, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "hr", "br", "paragraph");
+                }
+                toolbar = null;
+
+                if (flags.indexOf("Font, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "fontsize", "fontfamily");
+                }
+                if (flags.indexOf("Format, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "formats");
+                }
+                toolbar = null;
+
+                if (flags.indexOf("Links, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "link", "unlink");
+                }
+                if (flags.indexOf("Code, ") > -1)
+                {
+                    if (toolbar == null)
+                    {
+                        toolbar = [];
+                        toolbars.push(toolbar);
+                    }
+                    toolbar.push("separator", "code", "removeformat", "striptags");
+                }
+                toolbar = null;
 
                 var htmlbox = $this.htmlbox({
                     toolbars: toolbars,
                     about: false,
                     idir: urlRoot + "Images/htmlbox/",
-                    css: "body{font-family:'Segoe UI', Tahoma, sans-serif;}",
+                    css: "body{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;}",
                     skin: "silver",
                     icons: "silk",
                     change: function ()
                     {
                         window.isDirty = true;
+                        $this[0].onchange();
                     }
                 });
 
                 $this.data("htmlbox", htmlbox);
 
-                var jTable = jParent.children("table");
-                var jFrame = jTable.find("iframe");
+                var $table = $parent.children("table");
+                var $frame = $table.find("iframe");
                 $(window).resize(function ()
                 {
                     setTimeout(function ()
                     {
-                        var oldWidth = jFrame.width();
-                        var newWidth = jParent.width();
+                        var oldWidth = $frame.width();
+                        var newWidth = $parent.width();
                         if (oldWidth != newWidth - 1)
                         {
-                            jFrame.width(newWidth);
-                            jTable.width(newWidth);
+                            $frame.width(newWidth);
+                            $table.width(newWidth);
                         }
                     }, 0);
                 });
