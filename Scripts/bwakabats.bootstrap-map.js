@@ -51,7 +51,7 @@
 
     if (isImage)
     {
-        $("<img/>").attr("src", image).load(function ()
+        $("<img/>").attr("src", image).on("load", function ()
         {
             var x = this.width;
             var y = this.height;

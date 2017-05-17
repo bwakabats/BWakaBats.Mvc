@@ -85,7 +85,7 @@ namespace BWakaBats.Bootstrap
                 {
                     label.Attributes.Add("data-container-for", name);
                 }
-                label.AddCssClass("rado-inline");
+                label.AddCssClass("radio-inline");
                 return label.ToString();
             }
 

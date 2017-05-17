@@ -92,7 +92,7 @@
             $inputs.filter("[data-type=datetime]")
                 .datetimepicker({
                     format: "DD/MM/YYYY HH:mm",
-                    stepping: 5,
+                    stepping: 1,
                     icons: awesomeIcons,
                     useCurrent: false,
                     showClose: true
@@ -1007,7 +1007,7 @@ $(document).ready(function ()
         document.querySelector('head').appendChild(msViewportStyle);
     }
 
-    $(window).load(function ()
+    $(window).on("load", function ()
     {
         utilities.fixForm($(document));
     });

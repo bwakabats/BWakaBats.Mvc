@@ -13,7 +13,7 @@
     -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Better control over the tools available in the HTML Area Box</releaseNotes>
+    <releaseNotes>Add missing dependancy to jQuery.Cookie</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Bootstrap MVC</tags>
     <contentFiles>
@@ -29,6 +29,7 @@
       <dependency id="Twitter.Bootstrap.Less" version="3.3.5" />
       <dependency id="Twitter.Typeahead" version="0.11.1" />
       <dependency id="WebActivatorEx" version="2.0.6" />
+      <dependency id="jQuery.Cookie" version="1.4.1" />
     </dependencies>
   </metadata>
   <!--<files>

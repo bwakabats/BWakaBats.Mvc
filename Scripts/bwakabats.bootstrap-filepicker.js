@@ -144,7 +144,7 @@
     var $back = $("#previewCrop");
     $back.find("#previewClose").click(self.close);
 
-    $("#imageCrop").load(function ()
+    $("#imageCrop").on("load", function ()
     {
         self.resize(true);
     });
