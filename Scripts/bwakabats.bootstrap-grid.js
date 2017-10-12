@@ -22,14 +22,14 @@ var BootstrapGrid = function ($element)
 
     self.$element = $element;
     self.uniqueGroupId = Math.floor(Math.random() * 100000 + 1) * 10000;
-    var _totals = $element.find(".grid-total");
+    var _totals = self.$element.find(".grid-total");
     self.hasTotals = _totals.length > 0;
     var _subtotalsRowHtml = self.hasTotals ? $(_totals[0].outerHTML).removeClass("grid-total").addClass("grid-subtotal")[0].outerHTML : "";
 
     self.cookieName = "grid" + _bootstrapGridIndex;
     $.cookie.json = true;
     self.settings = $.cookie(self.cookieName);
-    var _id = location.pathname.replace(/[^a-z]+/gi, "") + $element.data("grid-id") + self._getId($element);
+    var _id = location.pathname.replace(/[^a-z]+/gi, "") + self.$element.data("grid-id") + self._getId($element);
     var _saved = (self.settings != undefined && self.settings.id == _id);
     if (!_saved)
     {
@@ -94,13 +94,19 @@ var BootstrapGrid = function ($element)
         self.settings.filterValue = value;
         self._save();
 
-        var filterIndex = "data-value-" + index;
+        var filterIndex = "data-filtervalue-" + index;
+        var sortIndex = "data-sortvalue-" + index;
         value = value.toUpperCase();
         var $rows = self.$element.find(".grid-row,.grid-row-alt");
         $rows.each(function ()
         {
             var $row = $(this);
-            $row.data("isFiltered", $row.attr(filterIndex).indexOf(value) == -1);
+            var $filterValue = $row.attr(filterIndex)
+            if ($filterValue == undefined)
+            {
+                var $filterValue = $row.attr(sortIndex)
+            }
+            $row.data("isFiltered", $filterValue.indexOf(value) == -1);
         });
         self.$element.data("pagecurrent", 1);
         self.$element.find("[data-page-select]").removeClass("active");
@@ -148,7 +154,7 @@ var BootstrapGrid = function ($element)
         self.$element.find(".grid-group").detach();
         self.$element.find(".grid-subtotal").detach();
 
-        var sortIndex = "data-value-" + self.settings.sortColumn;
+        var sortIndex = "data-sortvalue-" + self.settings.sortColumn;
         var sortOrder = self.settings.sortOrder;
         var groupOrder = self.settings.groupOrder;
 
@@ -182,7 +188,7 @@ var BootstrapGrid = function ($element)
         }
         else
         {
-            var groupIndex = "data-value-" + self.settings.groupColumn;
+            var groupIndex = "data-filtervalue-" + self.settings.groupColumn;
             var sortedRows = $rows.get().sort(function (a, b)
             {
                 var groupA = a.attributes[groupIndex].value;
@@ -351,10 +357,10 @@ var BootstrapGrid = function ($element)
         if (!self.hasTotals)
             return;
 
-        $("[data-total]").each(function ()
+        self.$element.find("[data-total]").each(function ()
         {
             var $column = $(this);
-            var totalIndex = "data-value-" + $column.data("total");
+            var totalIndex = "data-sortvalue-" + $column.data("total");
             var type = $column.data("total-type");
             var groupId = $column.parent().data("groupid");
 
@@ -376,14 +382,14 @@ var BootstrapGrid = function ($element)
             {
                 filter += "[data-groupid=" + groupId + "]";
             }
-            var count = $element.find(filter).length;
+            var count = self.$element.find(filter).length;
             if (type == "count")
             {
                 result = count;
             }
             else
             {
-                $element.find(filter).each(function ()
+                self.$element.find(filter).each(function ()
                 {
                     //if (this.attributes["data-page"].value == "0")
                     //    return;
@@ -429,18 +435,18 @@ var BootstrapGrid = function ($element)
         });
     };
 
-    var $moveableRows = $element.find("[data-rowid]");
+    var $moveableRows = self.$element.find("[data-rowid]");
     if ($moveableRows.length > 0)
     {
         var $firstRow = $moveableRows.first();
         var $lastRow = $moveableRows.last();
 
-        var url = $element.data("move-url");
+        var url = self.$element.data("move-url");
         var dragcounter = 0;
         var draggingId = 0;
         var draggingGroupId = undefined;
 
-        var buttons = $element.data("move-buttons");
+        var buttons = self.$element.data("move-buttons");
         var htmlButtons = "<div class='grid-move-bar'><button type='button' class='btn btn-primary grid-move-btn grid-drag' title='Drag up or down'><span class='fa fa-arrows-v'></span></button>";
         if (buttons == "all" || buttons.indexOf("top") > -1)
         {
@@ -468,7 +474,7 @@ var BootstrapGrid = function ($element)
                 event.preventDefault();
                 event.stopPropagation();
                 dragcounter++;
-                $element.find(".drag-over").removeClass("drag-over");
+                self.$element.find(".drag-over").removeClass("drag-over");
                 if (!$this.hasClass("dragging") && (draggingGroupId == null || $this.data("groupid") == draggingGroupId))
                 {
                     $this.addClass("drag-over");
@@ -495,14 +501,14 @@ var BootstrapGrid = function ($element)
                 event.preventDefault();
                 event.stopPropagation();
                 dragcounter = 0;
-                $element.find(".drag-over").removeClass("drag-over");
+                self.$element.find(".drag-over").removeClass("drag-over");
                 var rowId = $(this).closest(".row").data("rowid");
                 location.href = url + "?id=" + encodeURIComponent(draggingId) + "&direction=DragDrop&dropId=" + encodeURIComponent(rowId);
             });
         $firstRow.find(".grid-move-top, .grid-move-up").prop("disabled", true);
         $lastRow.find(".grid-move-bottom, .grid-move-down").prop("disabled", true);
 
-        $element.find(".grid-drag")
+        self.$element.find(".grid-drag")
             .prop("draggable", true)
             .on("dragstart", function ()
             {
@@ -511,31 +517,31 @@ var BootstrapGrid = function ($element)
                 draggingId = $row.data("rowid");
                 draggingGroupId = (self.settings.groupColumn == -1 ? undefined : $row.data("groupid"));
                 $row.addClass("dragging");
-                $element.addClass('dragging');
+                self.$element.addClass('dragging');
             })
             .on("dragend", function ()
             {
                 draggingId = undefined;
                 $(this).closest(".row").removeClass("dragging");
-                $element.removeClass('dragging');
+                self.$element.removeClass('dragging');
             });
 
-        $element.find(".grid-move-top").click(function ()
+        self.$element.find(".grid-move-top").click(function ()
         {
             var rowId = $(this).closest(".row").data("rowid");
             location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Top";
         });
-        $element.find(".grid-move-bottom").click(function ()
+        self.$element.find(".grid-move-bottom").click(function ()
         {
             var rowId = $(this).closest(".row").data("rowid");
             location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Bottom";
         });
-        $element.find(".grid-move-up").click(function ()
+        self.$element.find(".grid-move-up").click(function ()
         {
             var rowId = $(this).closest(".row").data("rowid");
             location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Up";
         });
-        $element.find(".grid-move-down").click(function ()
+        self.$element.find(".grid-move-down").click(function ()
         {
             var rowId = $(this).closest(".row").data("rowid");
             location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Down";
@@ -543,7 +549,7 @@ var BootstrapGrid = function ($element)
     }
 
     var $automaticFilter;
-    $element.find("[data-filterable]").each(function ()
+    self.$element.find("[data-filterable]").each(function ()
     {
         var $column = $(this);
         var index = $column.data("filterable");
@@ -626,7 +632,7 @@ var BootstrapGrid = function ($element)
 
     var automaticSortIndex = 0;
     var $automaticSortIcon;
-    $element.find("[data-sortable]").each(function ()
+    self.$element.find("[data-sortable]").each(function ()
     {
         var $column = $(this);
         var index = $column.data("sortable");
@@ -664,7 +670,7 @@ var BootstrapGrid = function ($element)
     var automaticGroupIndex = -1;
     var automaticGroupExpanded;
     var $automaticGroupIcon;
-    $element.find("[data-groupable]").each(function ()
+    self.$element.find("[data-groupable]").each(function ()
     {
         var $column = $(this);
         var index = $column.data("groupable");

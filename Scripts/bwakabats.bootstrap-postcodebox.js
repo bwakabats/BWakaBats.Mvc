@@ -1,3 +1,6 @@
+//versioned 25 5c35bb5177dbeee0e96fe2c8270a2676
+SetScriptVersion(25, 'S\\bwakabats.bootstrap-postcodebox');
+
 ﻿var BootstrapAddressLookup = function ($element, $button, $addressBoxes)
 {
     var self = this;
@@ -131,7 +134,7 @@
                     $addressBox.data("address-longitude", address.Longitude);
                     break;
                 default:
-                    if ($element.val() != previousPostCode)
+                    if ($element.val() != previousPostcode)
                     {
                         value = rep(value, "addressline1", address.AddressLine1);
                         value = rep(value, "addressline2", address.AddressLine2);
@@ -156,6 +159,6 @@
         });
     };
 
-    var previousPostCode = $element.val();
-    self._lookup(previousPostCode);
+    var previousPostcode = $element.val();
+    self._lookup(previousPostcode);
 };

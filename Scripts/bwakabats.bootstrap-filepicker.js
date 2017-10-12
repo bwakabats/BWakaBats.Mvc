@@ -232,12 +232,19 @@ var BootstrapFilePicker = function ()
                         {
                             progressContainer.hide();
                         }, 3000);
+                    }, function (data, title, textStatus, jqXHR, error)
+                    {
+                        utilities.failed(data, title, textStatus, jqXHR, error);
+                        $("#" + id).val("");
+                        $("#" + id).trigger("change");
                     });
                 },
                 Error: function (up, err)
                 {
                     progressContainer.hide();
                     utilities.message("Uploader Error", err.message + "<br/><br/>Error Code: " + err.code, "medium");
+                    $("#" + id).val("");
+                    $("#" + id).trigger("change");
                 }
             }
         });

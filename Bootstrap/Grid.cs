@@ -260,6 +260,8 @@ namespace BWakaBats.Bootstrap
                 rowTag = CreateRow(false, false, "", columns, rowName, columnClassPrefix, totalColumnWidth, page, rowHtmlAttributes, row, rowCount, rowId, c =>
                 {
                     var format = c.Context.Format;
+                    if (format == null)
+                        return null;
                     var cellValue = format(row, rowCount);
                     if (cellValue == null)
                         return null;
@@ -419,79 +421,160 @@ namespace BWakaBats.Bootstrap
             foreach (var column in columns)
             {
                 var context = column.Context;
-                string value;
-                var getSortValue = context.Value;
-                if (getSortValue != null)
+                string sortValue;
+                string filterValue;
+
+                if (context.Value != null)
                 {
-                    var originalValue = getSortValue(row, rowCount);
-                    value = originalValue == null ? "" : originalValue.ToUpperInvariant();
+                    var originalValue = context.Value(row, rowCount);
+                    sortValue = originalValue == null ? "" : originalValue.ToUpperInvariant();
+                    filterValue = sortValue;
                 }
                 else
                 {
-                    var getCellContext = context.Format;
-                    var cellValue = getCellContext(row, rowCount);
-                    if (cellValue == null)
+                    var format = context.Format;
+                    if (format == null)
                     {
-                        value = "";
+                        sortValue = "";
+                        filterValue = sortValue;
                     }
                     else
                     {
-                        switch (context.Style)
+                        var cellValue = format(row, rowCount);
+                        if (cellValue == null)
                         {
-                            case GridColumnStyle.Date:
-                                value = ((DateTime)cellValue).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
-                                break;
-                            case GridColumnStyle.DateTime:
-                                value = ((DateTime)cellValue).ToString("yyyyMMddHHmmssff", CultureInfo.InvariantCulture);
-                                break;
-                            case GridColumnStyle.Currency:
-                                cellString = cellValue as string;
-                                if (cellString != null)
-                                {
-                                    value = cellValue.ToString().PadLeft(9);
-                                }
-                                else
-                                {
-                                    try
+                            sortValue = "";
+                            filterValue = sortValue;
+                        }
+                        else
+                        {
+                            switch (context.Style)
+                            {
+                                case GridColumnStyle.Date:
+                                    cellString = cellValue as string;
+                                    if (cellString != null)
                                     {
-                                        value = ((decimal)cellValue).ToString("000000.00", CultureInfo.InvariantCulture);
+                                        sortValue = cellValue.ToString().PadLeft(9);
+                                        filterValue = sortValue;
                                     }
-                                    catch
+                                    else
                                     {
-                                        value = cellValue.ToString().PadLeft(9);
+                                        try
+                                        {
+                                            DateTime cellDate = (DateTime)cellValue;
+                                            sortValue = cellDate.ToString("yyyyMMddH", CultureInfo.InvariantCulture);
+                                            filterValue = cellDate.ToString("dd/MM/yy", CultureInfo.InvariantCulture); ;
+                                        }
+                                        catch
+                                        {
+                                            sortValue = cellValue.ToString();
+                                            filterValue = sortValue;
+                                        }
                                     }
-                                }
-                                break;
-                            case GridColumnStyle.Number:
-                            case GridColumnStyle.PercentageBar:
-                                cellString = cellValue as string;
-                                if (cellString != null)
-                                {
-                                    value = cellValue.ToString().PadLeft(14);
-                                }
-                                else
-                                {
-                                    try
+                                    break;
+                                case GridColumnStyle.DateTime:
+                                    cellString = cellValue as string;
+                                    if (cellString != null)
                                     {
-                                        value = ((double)cellValue).ToString("00000000.00000", CultureInfo.InvariantCulture);
+                                        sortValue = cellValue.ToString().PadLeft(9);
+                                        filterValue = sortValue;
                                     }
-                                    catch
+                                    else
                                     {
-                                        value = cellValue.ToString().PadLeft(14);
+                                        try
+                                        {
+                                            DateTime cellDateTime = (DateTime)cellValue;
+                                            sortValue = cellDateTime.ToString("yyyyMMddHHmmssff", CultureInfo.InvariantCulture);
+                                            filterValue = cellDateTime.ToString("dd/MM/yy HH:mm", CultureInfo.InvariantCulture); ;
+                                        }
+                                        catch
+                                        {
+                                            sortValue = cellValue.ToString();
+                                            filterValue = sortValue;
+                                        }
                                     }
-                                }
-                                break;
-                            case GridColumnStyle.Boolean:
-                                value = ((bool)cellValue) ? "1" : "0";
-                                break;
-                            default:
-                                value = cellValue.ToString().ToUpperInvariant();
-                                break;
+                                    break;
+                                case GridColumnStyle.Currency:
+                                    cellString = cellValue as string;
+                                    if (cellString != null)
+                                    {
+                                        sortValue = cellValue.ToString().PadLeft(9);
+                                        filterValue = sortValue;
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            decimal cellDecimal = (decimal)cellValue;
+                                            sortValue = cellDecimal.ToString("000000.00", CultureInfo.InvariantCulture);
+                                            filterValue = cellDecimal.ToString("0.00", CultureInfo.InvariantCulture); ;
+                                        }
+                                        catch
+                                        {
+                                            sortValue = cellValue.ToString().PadLeft(9);
+                                            filterValue = sortValue;
+                                        }
+                                    }
+                                    break;
+                                case GridColumnStyle.Number:
+                                    cellString = cellValue as string;
+                                    if (cellString != null)
+                                    {
+                                        sortValue = cellValue.ToString().PadLeft(14);
+                                        filterValue = sortValue;
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            double cellDouble = (double)cellValue;
+                                            sortValue = cellDouble.ToString("00000000.00000", CultureInfo.InvariantCulture);
+                                            filterValue = cellDouble.ToString("#0.00", CultureInfo.InvariantCulture);
+                                        }
+                                        catch
+                                        {
+                                            sortValue = cellValue.ToString().PadLeft(14);
+                                            filterValue = sortValue;
+                                        }
+                                    }
+                                    break;
+                                case GridColumnStyle.PercentageBar:
+                                    cellString = cellValue as string;
+                                    if (cellString != null)
+                                    {
+                                        sortValue = cellValue.ToString().PadLeft(14);
+                                        filterValue = sortValue;
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            int cellPercent = (int)cellValue;
+                                            sortValue = cellPercent.ToString("000.00000", CultureInfo.InvariantCulture);
+                                            filterValue = cellPercent.ToString("#0", CultureInfo.InvariantCulture);
+                                        }
+                                        catch
+                                        {
+                                            sortValue = cellValue.ToString().PadLeft(14);
+                                            filterValue = sortValue;
+                                        }
+                                    }
+                                    break;
+                                case GridColumnStyle.Boolean:
+                                    sortValue = ((bool)cellValue) ? "Yes" : "No";
+                                    filterValue = sortValue;
+                                    break;
+                                default:
+                                    sortValue = cellValue.ToString().ToUpperInvariant();
+                                    filterValue = sortValue;
+                                    break;
+                            }
                         }
                     }
                 }
 
-                rowTag.MergeAttribute("data-value-" + context.Index, value);
+                rowTag.MergeAttribute("data-sortvalue-" + context.Index, sortValue);
+                rowTag.MergeAttribute("data-filtervalue-" + context.Index, filterValue);
             }
         }
 

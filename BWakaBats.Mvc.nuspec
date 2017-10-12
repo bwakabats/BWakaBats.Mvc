@@ -13,7 +13,7 @@
     -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Add missing dependancy to jQuery.Cookie</releaseNotes>
+    <releaseNotes>Fix filtering on Date grid columns</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Bootstrap MVC</tags>
     <contentFiles>

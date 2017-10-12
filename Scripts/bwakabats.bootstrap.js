@@ -104,7 +104,7 @@
             $inputs.filter("[data-type=time]")
                 .datetimepicker({
                     format: "HH:mm",
-                    stepping: 5,
+                    stepping: 1,
                     icons: awesomeIcons,
                     useCurrent: false,
                     showClose: true
@@ -256,7 +256,10 @@
                     change: function ()
                     {
                         window.isDirty = true;
-                        $this[0].onchange();
+                        if (typeof $this[0].onchange === "function")
+                        {
+                            $this[0].onchange();
+                        }
                     }
                 });
 
@@ -296,7 +299,12 @@
                     {
                         name: $this.attr("name"),
                         limit: 10,
-                        source: function (query, cd) { cd(source); }
+                        source: function (query, cd)
+                        {
+                            var q = query.toLowerCase();
+                            var search = source.filter(function (s) { return s.toLowerCase().indexOf(q) !== -1; });
+                            cd(search);
+                        }
                     }
                 );
             });
@@ -471,6 +479,8 @@
         $container.find("[title]").tooltip({ container: "body" });
     };
 
+    self._tab = null;
+
     self.interruptClick = function ($container)
     {
         $container.find("[data-interrupt]").each(function ()
@@ -486,6 +496,13 @@
             }
             $this.off("click").click(function (event)
             {
+                var $tab = $this.closest(".tab-content");
+                self._tab = $tab.parent().find("ul > li.active > a").attr("href");
+                if (self._tab != undefined && self._tab != null)
+                {
+                    self._tab = self._tab.substring(1);
+                }
+
                 self.interrupt(title, href);
                 event.preventDefault();
                 return false;
@@ -748,6 +765,21 @@
                     });
                     $(selector).off();
                 }
+                else if (func.stayOpen)
+                {
+                    func = func.func;
+                    if (typeof (func) == "function")
+                    {
+                        $button.click(function ()
+                        {
+                            return func();
+                        });
+                    }
+                    else
+                    {
+                        alert("func.func not a function");
+                    }
+                }
                 else if (typeof (func) == "function")
                 {
                     $button.click(function ()
@@ -795,6 +827,11 @@
         //else
         //{
         //    $(selector).modal({ backdrop: true });
+        //}
+        //var bsModal = $(selector).data("bs.modal");
+        //if (!(bsModal && bsModal.isShown))
+        //{
+        //    $(selector).modal({ backdrop: "static" });
         //}
         $(selector).modal({ backdrop: "static" });
     };
@@ -878,7 +915,7 @@
             {
                 href();
             }
-            if (href.substring(0, 11) == "javascript:")
+            else if (href.substring(0, 11) == "javascript:")
             {
                 eval(href);
             }
@@ -907,13 +944,21 @@
                 }
                 self.interrupt(title, href, data.confirmationMessage);
             }
-            else if (data.href == null)
+            else if (data.href != null)
+            {
+                location.href = data.href;
+            }
+            else if (self._tab == undefined || self._tab == null)
             {
                 history.go(0);
             }
+            else if (location.href.indexOf("?") > -1)
+            {
+                location.href = location.href.replace("&tab=", "&tabold=").replace("?tab=", "?tabold=") + "&tab=" + self._tab;
+            }
             else
             {
-                location.href = data.href;
+                location.href = location.href + "?tab=" + self._tab;
             }
         }, function (data, title, textStatus, jqXHR, errorThrown)
         {
@@ -948,7 +993,7 @@ $(document).ready(function ()
                     var $navbar = $(this);
                     if ($navbar.height() > 75)
                     {
-                        $navbars.addClass("squeeze");
+                        $navbar.addClass("squeeze");
                     }
                     var $collapsibles = $navbar.find(".autocollapse").reverse();
                     $collapsibles.each(function ()

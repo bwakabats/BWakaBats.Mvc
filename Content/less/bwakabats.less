@@ -21,9 +21,9 @@
 @brand-primary-darker: hsl(@brand-primary-hue - @hue-shift, @brand-primary-saturation, @darker);
 @brand-primary-darkest: hsl(@brand-primary-hue + @hue-shift, @brand-primary-saturation, @darkest);
 
-@fieldset-header-color: #fff;
+@fieldset-header-color: #000;
 @fieldset-header-bg: @brand-primary-light;
-@fieldset-footer-color: #fff;
+@fieldset-footer-color: #000;
 @fieldset-footer-bg: @brand-primary-lighter;
 
 @togglecontrol-size: @input-height-base * .666;
@@ -157,11 +157,14 @@ Button
 Date/Time Picker
 ==========================================================================
 */
+@bs-datetimepicker-active-color: #000;
+
 .bootstrap-datetimepicker-widget {
     td {
         &.today {
             &:not(.active) {
-                background-color: @brand-primary-light;
+                background-color: @brand-warning;
+                color: #000;
             }
 
             &:before {
@@ -306,7 +309,7 @@ form {
         &[disabled],
         &[readonly] {
             cursor: not-allowed;
-            background-color: @input-bg-disabled;
+            background-color: darken(@input-bg-disabled, 15%);
             opacity: 1; // iOS fix for unreadable disabled content
         }
     }
@@ -426,11 +429,11 @@ Standard Colors and Backgrounds
 
 .colorAndBg(@state, @color) {
     .color-@{state} {
-        color: @color;
+        color: @color !important;
     }
 
     .background-@{state} {
-        background: @color;
+        background: @color !important;
     }
 }
 
