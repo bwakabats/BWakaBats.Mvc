@@ -146,9 +146,10 @@ namespace BWakaBats.Bootstrap
                 listBuilder.AppendLine("<li style=\"display:none\"></li>");
             }
 
-            var listTag = new HtmlTagBuilder("ul");
-            listTag.InnerHtml = listBuilder.ToString();
-
+            var listTag = new HtmlTagBuilder("ul")
+            {
+                InnerHtml = listBuilder.ToString()
+            };
             var divBuilder = new HtmlTagBuilder("div");
             divBuilder.AddCssClass(htmlHelper.ViewData.ModelState.IsValid ? HtmlHelper.ValidationSummaryValidCssClassName : HtmlHelper.ValidationSummaryCssClassName);
             divBuilder.AddCssClass("alert alert-danger fade in");
@@ -182,10 +183,9 @@ namespace BWakaBats.Bootstrap
             return htmlHelper.ViewData.ModelState
                 .Select(kv =>
                 {
-                    ModelMetadata metadata;
                     string key;
                     int order;
-                    if (metadataDictionary.TryGetValue(kv.Key, out metadata))
+                    if (metadataDictionary.TryGetValue(kv.Key, out ModelMetadata metadata))
                     {
                         key = metadata.DisplayName ?? kv.Key;
                         order = metadata.Order;

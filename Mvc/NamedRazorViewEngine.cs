@@ -51,8 +51,7 @@ namespace BWakaBats.Mvc
             var result = base.FindView(controllerContext, viewName, masterName, useCache);
             if (result != null && result.View != null)
             {
-                var view = result.View as NamedRazorView;
-                if (view != null)
+                if (result.View is NamedRazorView view)
                 {
                     view.Name = viewName;
                 }

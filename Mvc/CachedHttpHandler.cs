@@ -47,7 +47,6 @@ namespace BWakaBats.Mvc
             string uri = request.Url.AbsoluteUri;
             string physicalPath = GetPhysicalPath(context);
             var fileInfo = new FileInfo(physicalPath);
-            object content;
             bool tooLarge;
 #if DEBUG || TEST
             tooLarge = true;
@@ -71,7 +70,7 @@ namespace BWakaBats.Mvc
             }
             else
             {
-                if (!_cache.TryGetValue(uri, out content))
+                if (!_cache.TryGetValue(uri, out object content))
                 {
                     lock (_cache)
                     {
@@ -87,15 +86,13 @@ namespace BWakaBats.Mvc
                     }
                 }
 
-                var contentBytes = content as byte[];
-                if (contentBytes != null)
+                if (content is byte[] contentBytes)
                 {
                     response.BinaryWrite(contentBytes);
                 }
                 else
                 {
-                    var contentChars = content as char[];
-                    if (contentChars != null)
+                    if (content is char[] contentChars)
                     {
                         response.Write(contentChars, 0, contentChars.Length);
                     }
@@ -124,8 +121,7 @@ namespace BWakaBats.Mvc
         {
             if (modifiedSince != null)
             {
-                DateTime clientFileLastModified;
-                if (DateTime.TryParse(modifiedSince, out clientFileLastModified))
+                if (DateTime.TryParse(modifiedSince, out DateTime clientFileLastModified))
                 {
                     return clientFileLastModified < serverFileLastModified;
                 }

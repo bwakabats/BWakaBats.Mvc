@@ -80,8 +80,7 @@ namespace BWakaBats.Bootstrap
                 Header(name);
             }
 
-            var memberExpression = expression.Body as MemberExpression;
-            if (memberExpression != null)
+            if (expression.Body is MemberExpression memberExpression)
             {
                 var attributes = (HtmlAttributeAttribute[])memberExpression.Member.GetCustomAttributes(typeof(HtmlAttributeAttribute), true);
                 var dictionary = attributes.ToDictionary(v => v.Key, v => (object)v.Value);
@@ -104,8 +103,7 @@ namespace BWakaBats.Bootstrap
             if (dictionary == null)
                 return;
 
-            object value;
-            if (!dictionary.TryGetValue(key, out value))
+            if (!dictionary.TryGetValue(key, out object value))
                 return;
 
             dictionary.Remove(key);

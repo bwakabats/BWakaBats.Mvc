@@ -1,7 +1,4 @@
-//versioned 25 5c35bb5177dbeee0e96fe2c8270a2676
-SetScriptVersion(25, 'S\\bwakabats.bootstrap-postcodebox');
-
-﻿var BootstrapAddressLookup = function ($element, $button, $addressBoxes)
+var BootstrapAddressLookup = function ($element, $button, $addressBoxes)
 {
     var self = this;
     self.$element = $element;

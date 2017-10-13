@@ -59,7 +59,7 @@ namespace BWakaBats.Bootstrap
             }
             else if (string.IsNullOrWhiteSpace(format))
             {
-                value = model == null ? null : model.ToString();
+                value = model?.ToString();
             }
             else
             {

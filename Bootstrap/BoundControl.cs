@@ -106,8 +106,7 @@ namespace BWakaBats.Bootstrap
             if (Context.ValidationAttributes == null)
                 return defaultValue;
 
-            object value;
-            if (!Context.ValidationAttributes.TryGetValue("data-val-" + name, out value))
+            if (!Context.ValidationAttributes.TryGetValue("data-val-" + name, out object value))
                 return defaultValue;
 
             return ConvertProperty<TResult, object>(value);
@@ -216,7 +215,7 @@ namespace BWakaBats.Bootstrap
                 {
                     feedBackStyle = feedBackStyle.Substring(0, feedBackStyle.Length - 1) + ";display: none;'";
                 }
-                output += "<span class='glyphicon form-control-feedback' " + feedBackStyle + "></span>";
+                output += "<span class='fa form-control-feedback' " + feedBackStyle + "></span>";
             }
 
             string description = Context.Description;

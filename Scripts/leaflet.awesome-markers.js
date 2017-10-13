@@ -29,7 +29,7 @@ Tweaked By: BWakaBats
             shadowAnchor: [13, 37],
             shadowSize: [41, 41],
             className: "awesome-marker",
-            prefix: "glyphicon",
+            prefix: "fa",
             spinClass: "fa-spin",
             extraClasses: "",
             icon: "home",

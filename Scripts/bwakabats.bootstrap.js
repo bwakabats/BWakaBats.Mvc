@@ -978,6 +978,11 @@ var navbarAutocollapseLongDelay;
 
 $(document).ready(function ()
 {
+    setTimeout(function ()
+    {
+        utilities.fixForm($(document));
+    }, 0);
+
     var $collapsibles = $(".navbar .autocollapse, .navbar .autocollapseImportant, .nav-tabs .autocollapse, .nav-tabs .autocollapseImportant, .autocollapsebar .autocollapse, .autocollapsebar .autocollapseImportant");
     if ($collapsibles.length > 0)
     {
@@ -1051,11 +1056,6 @@ $(document).ready(function ()
         msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
         document.querySelector('head').appendChild(msViewportStyle);
     }
-
-    $(window).on("load", function ()
-    {
-        utilities.fixForm($(document));
-    });
 
     $(window).bind("beforeunload", function ()
     {

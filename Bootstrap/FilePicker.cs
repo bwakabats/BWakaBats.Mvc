@@ -238,6 +238,7 @@ namespace BWakaBats.Bootstrap
         public bool CanDelete { get; internal set; } = true;
         public Button Button { get; internal set; }
     }
+
     public sealed class FilePicker : FilePicker<FilePicker>
     {
         internal FilePicker(string name = null) : base(new FilePickerContext(), name) { }

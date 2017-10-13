@@ -61,32 +61,26 @@ namespace BWakaBats.Bootstrap
             if (value == null)
                 return new Location();
 
-            var location = value as ILocation;
-            if (location != null)
+            if (value is ILocation location)
                 return location;
 
-            var geoCoordinate = value as GeoCoordinate;
-            if (geoCoordinate != null)
+            if (value is GeoCoordinate geoCoordinate)
             {
                 if (geoCoordinate.IsUnknown)
                     return new Location();
                 return new Location(geoCoordinate.Latitude, geoCoordinate.Longitude);
             }
-            var dbGeography = value as DbGeography;
-            if (dbGeography != null)
+            if (value is DbGeography dbGeography)
                 return new Location(dbGeography.Latitude, dbGeography.Longitude);
 
-            var tupleNullable = value as Tuple<double?, double?>;
-            if (tupleNullable != null)
+            if (value is Tuple<double?, double?> tupleNullable)
                 return new Location(tupleNullable.Item1, tupleNullable.Item2);
 
-            var tuple = value as Tuple<double, double>;
-            if (tuple != null)
+            if (value is Tuple<double, double> tuple)
                 return new Location(tuple.Item1, tuple.Item2);
 
             var type = value.GetType();
-            Tuple<PropertyInfo, PropertyInfo> tupleProperties;
-            if (!_types.TryGetValue(type, out tupleProperties))
+            if (!_types.TryGetValue(type, out Tuple<PropertyInfo, PropertyInfo> tupleProperties))
             {
                 lock (_types)
                 {
