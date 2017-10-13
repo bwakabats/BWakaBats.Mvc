@@ -13,7 +13,7 @@
     -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fix filtering on Date grid columns</releaseNotes>
+    <releaseNotes>Better auto-collapsing</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Bootstrap MVC</tags>
     <contentFiles>

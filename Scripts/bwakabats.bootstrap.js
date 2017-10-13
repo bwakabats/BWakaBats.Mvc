@@ -694,7 +694,7 @@
         if ($(selector).length == 0)
         {
             dialogHtml =
- "<div class='modal fade' id='" + id + "' tabindex='-1' role='dialog' aria-labelledby='dialogTitle' aria-hidden='true'>"
+  "<div class='modal fade' id='" + id + "' tabindex='-1' role='dialog' aria-labelledby='dialogTitle' aria-hidden='true'>"
 + "  <div class='modal-dialog'>"
 + "    <div class='modal-content'>"
 + "      <div class='modal-header'>"
@@ -966,44 +966,46 @@
             self.failed(data, title, textStatus, jqXHR, errorThrown);
         });
     };
-};
-var utilities = new BootstrapUtilities();
 
-jQuery.fn.reverse = [].reverse;
+    self.navbarCollapse = function () { };
 
-var navbarCollapse = function () { };
-var navbarAutocollapseDelay;
-var navbarAutocollapseRepeat = 0;
-var navbarAutocollapseLongDelay;
+    var navbarAutocollapseDelay;
+    var navbarAutocollapseRepeat = 0;
+    var navbarAutocollapseLongDelay;
 
-$(document).ready(function ()
-{
-    setTimeout(function ()
+    $(document).ready(function ()
     {
-        utilities.fixForm($(document));
-    }, 0);
-
-    var $collapsibles = $(".navbar .autocollapse, .navbar .autocollapseImportant, .nav-tabs .autocollapse, .nav-tabs .autocollapseImportant, .autocollapsebar .autocollapse, .autocollapsebar .autocollapseImportant");
-    if ($collapsibles.length > 0)
-    {
-        navbarCollapse = function ()
+        setTimeout(function ()
         {
-            $(".navbar .autocollapse, .navbar .autocollapseImportant, .nav-tabs .autocollapse, .nav-tabs .autocollapseImportant, .autocollapsebar .autocollapse, .autocollapsebar .autocollapseImportant").show();
-            var $navbars = $(".navbar, .nav-tabs, .autocollapsebar");
-            $navbars.removeClass("squeeze");
-            if (!$(".navbar-toggle").is(':visible'))
+            utilities.fixForm($(document));
+        }, 0);
+
+        var collapsibles = ".navbar .autocollapse, .navbar .autocollapseImportant, .nav-tabs .autocollapse, .nav-tabs .autocollapseImportant, .autocollapsebar .autocollapse, .autocollapsebar .autocollapseImportant";
+        var $collapsibles = $(collapsibles);
+        if ($collapsibles.length > 0)
+        {
+            self.navbarCollapse = function ()
             {
+                $(collapsibles).show();
+
+                var $navbars = $(".nav-tabs, .autocollapsebar");
+                $navbars.css("white-space", "nowrap").css("overflow", "hidden");
+                $navbars.children().filter("li").css("display", "inline-block").css("float", "none");
+
+                $navbars = $(".nav-tabs, .autocollapsebar");
+                $navbars.removeClass("squeeze");
                 $navbars.each(function ()
                 {
                     var $navbar = $(this);
-                    if ($navbar.height() > 75)
+                    var navbarReal = $navbar[0]
+                    if ($navbar.outerWidth() < navbarReal.scrollWidth)
                     {
                         $navbar.addClass("squeeze");
                     }
                     var $collapsibles = $navbar.find(".autocollapse").reverse();
                     $collapsibles.each(function ()
                     {
-                        if ($navbar.height() > 75)
+                        if ($navbar.outerWidth() < navbarReal.scrollWidth)
                         {
                             $(this).hide();
                         }
@@ -1015,7 +1017,7 @@ $(document).ready(function ()
                     $collapsibles = $navbar.find(".autocollapseImportant").reverse();
                     $collapsibles.each(function ()
                     {
-                        if ($navbar.height() > 75)
+                        if ($navbar.outerWidth() < navbarReal.scrollWidth)
                         {
                             $(this).hide();
                         }
@@ -1025,41 +1027,82 @@ $(document).ready(function ()
                         }
                     });
                 });
-            }
-        };
 
-        var navbarAutocollapse = function (delay, repeat, longDelay)
+                if (!$(".navbar-toggle").is(':visible'))
+                {
+                    $navbars = $(".navbar");
+                    $navbars.removeClass("squeeze");
+                    $navbars.each(function ()
+                    {
+                        var $navbar = $(this);
+                        if ($navbar.height() > 75)
+                        {
+                            $navbar.addClass("squeeze");
+                        }
+                        var $collapsibles = $navbar.find(".autocollapse").reverse();
+                        $collapsibles.each(function ()
+                        {
+                            if ($navbar.height() > 75)
+                            {
+                                $(this).hide();
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        });
+                        $collapsibles = $navbar.find(".autocollapseImportant").reverse();
+                        $collapsibles.each(function ()
+                        {
+                            if ($navbar.height() > 75)
+                            {
+                                $(this).hide();
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        });
+                    });
+                }
+            };
+
+            var navbarAutocollapse = function (delay, repeat, longDelay)
+            {
+                self.navbarCollapse();
+                if (delay != undefined)
+                {
+                    navbarAutocollapseDelay = delay;
+                    navbarAutocollapseRepeat = repeat;
+                    navbarAutocollapseLongDelay = longDelay;
+                }
+                navbarAutocollapseRepeat--;
+                if (navbarAutocollapseRepeat <= 0)
+                {
+                    navbarAutocollapseDelay = navbarAutocollapseLongDelay;
+                    navbarAutocollapseRepeat = 100000;
+                }
+                setTimeout(navbarAutocollapse, navbarAutocollapseDelay);
+            };
+
+            $(window).resize(navbarAutocollapse);
+            navbarAutocollapse(50, 10, 2000);
+        }
+
+        if (navigator.userAgent.match(/IEMobile\/10\.0/))
         {
-            navbarCollapse();
-            if (delay != undefined)
-            {
-                navbarAutocollapseDelay = delay;
-                navbarAutocollapseRepeat = repeat;
-                navbarAutocollapseLongDelay = longDelay;
-            }
-            navbarAutocollapseRepeat--;
-            if (navbarAutocollapseRepeat <= 0)
-            {
-                navbarAutocollapseDelay = navbarAutocollapseLongDelay;
-                navbarAutocollapseRepeat = 100000;
-            }
-            setTimeout(navbarAutocollapse, navbarAutocollapseDelay);
-        };
+            var msViewportStyle = document.createElement('style');
+            msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
+            document.querySelector('head').appendChild(msViewportStyle);
+        }
 
-        $(window).resize(navbarAutocollapse);
-        navbarAutocollapse(50, 10, 250);
-    }
-
-    if (navigator.userAgent.match(/IEMobile\/10\.0/))
-    {
-        var msViewportStyle = document.createElement('style');
-        msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
-        document.querySelector('head').appendChild(msViewportStyle);
-    }
-
-    $(window).bind("beforeunload", function ()
-    {
-        if (window.isDirty && window.ignoreDirty != true)
-            return "You have not saved your changes.";
+        $(window).bind("beforeunload", function ()
+        {
+            if (window.isDirty && window.ignoreDirty != true)
+                return "You have not saved your changes.";
+        });
     });
-});
+};
+var utilities = new BootstrapUtilities();
+
+jQuery.fn.reverse = [].reverse;
