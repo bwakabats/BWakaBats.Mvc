@@ -225,7 +225,7 @@ var BootstrapFilePicker = function ()
                         {
                             $image.width(data.width);
                         }
-                        self.uploaded(id, data.fileName, data.imageFileName);
+                        self.uploaded(id, data.fileName, data.imageFileName, data.fileContentType);
 
                         progressPercent.html("Done");
                         setTimeout(function ()
@@ -236,6 +236,7 @@ var BootstrapFilePicker = function ()
                     {
                         utilities.failed(data, title, textStatus, jqXHR, error);
                         $("#" + id).val("");
+                        $fileButton.closest(".filepicker-buttons").removeClass("selected");
                         $("#" + id).trigger("change");
                     });
                 },
@@ -244,11 +245,13 @@ var BootstrapFilePicker = function ()
                     progressContainer.hide();
                     utilities.message("Uploader Error", err.message + "<br/><br/>Error Code: " + err.code, "medium");
                     $("#" + id).val("");
+                    $fileButton.closest(".filepicker-buttons").removeClass("selected");
                     $("#" + id).trigger("change");
                 }
             }
         });
 
+        $("#" + id).data("uploader", uploader);
         if (fileType == "image")
         {
             uploader.setOption("filters", [{ title: "Pictures", extensions: "jpg,jpeg,gif,png,tif,tiff,exif" }]);
@@ -261,27 +264,28 @@ var BootstrapFilePicker = function ()
         uploader.init();
     };
 
-    self.uploaded = function (id, fileName, imageFileName)
+    self.uploaded = function (id, fileName, imageFileName, contentType)
     {
-        var extension = "";
+        var extension;
         var name = fileName;
         var lastDot = name.lastIndexOf(".");
         if (lastDot > -1)
         {
             extension = name.substr(lastDot + 1).toLowerCase();
-            if (";jpg;jpeg;gif;png;tiff;tif;exif;".indexOf(";" + extension + ";") > -1)
-            {
-                extension = "png";
-            }
             name = name.substr(0, lastDot);
         }
+        else
+        {
+            extension = "";
+        }
         name = name.substr(name.lastIndexOf("/") + 1);
-        $("[data-file-fileName='" + id + "']").val(fileName);
+        $("[data-file-filename='" + id + "']").val(fileName);
         $("[data-file-name='" + id + "']").val(name);
         $("[data-file-extension='" + id + "']").val(extension);
         $("[data-file-path='" + id + "']").val(imageFileName);
+        $("[data-file-contenttype='" + id + "']").val(contentType);
         $("#" + id + "_FileName").html(name);
-
+        $("[data-container-for='" + id + "_Button']").closest(".filepicker-buttons").addClass("selected");
         $("#" + id).trigger("change");
     };
 };

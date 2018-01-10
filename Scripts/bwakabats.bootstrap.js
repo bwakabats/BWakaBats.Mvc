@@ -1,6 +1,7 @@
 ﻿var BootstrapUtilities = function ()
 {
     var self = this;
+    var _canCapture;
 
     self.fixForm = function ($container, canBeDirty)
     {
@@ -29,7 +30,7 @@
                     var tabId = $tabPane.attr("id");
                     if (tabId != undefined)
                     {
-                        $form.find("a[href='#" + tabId + "'][data-toggle]").tab('show');
+                        $form.find("a[href='#" + tabId + "'][data-toggle]").tab("show");
                     }
                 };
 
@@ -406,6 +407,53 @@
             });
         });
 
+        var $captureFor = $container.find("[data-file-capture-for]");
+        if (_canCapture == false)
+        {
+            $this.hide();
+        }
+        else
+        {
+            $captureFor.each(function ()
+            {
+                var $this = $(this);
+                var id = $this.attr("data-file-capture-for");
+                $this.click(function ()
+                {
+                    if (_canCapture == undefined)
+                    {
+                        var getUserMedia = Modernizr.prefixed("getUserMedia", navigator);
+                        if (getUserMedia)
+                        {
+                            getUserMedia({ video: true }, function (stream)
+                            {
+                                _canCapture = true;
+                                var videoControl = document.createElement("video");
+                                videoControl.src = window.URL.createObjectURL(stream);
+                                self.videoControl = videoControl
+                                self._capture(id);
+                            }, function ()
+                                {
+                                    $captureFor.hide();
+                                    self.message("Capture Failed", "Sorry, you cannot capture at this time.");
+                                    _canCapture = false;
+                                });
+                        }
+                        else
+                        {
+                            $captureFor.hide();
+                            self.message("Capture Failed", "Sorry, you cannot capture at this time.");
+                            _canCapture = false;
+                        }
+                    }
+                    else if (_canCapture)
+                    {
+                        self._capture(id);
+                    }
+                });
+            });
+        }
+
         $container.find("[data-file-cancel-for]").each(function ()
         {
             var $this = $(this);
@@ -425,7 +473,7 @@
                 $("[data-file-name='" + id + "']").val("");
                 $("[data-file-extension='" + id + "']").val("");
                 $("#" + id + "_FileName").html("");
-
+                $this.closest(".filepicker-buttons").removeClass("selected");
                 $("#" + id).trigger("change");
             });
         });
@@ -465,6 +513,45 @@
         self.applyTooltips($container);
         self.interruptClick($container);
     };
+
+    self._capture = function (id)
+    {
+        var $id = $("#" + id);
+        var uploader = $id.data("uploader");
+        var videoControl = self.videoControl;
+        self.dialog({
+            id: "CaptureDialog",
+            title: "Capture Image",
+            size: "large",
+            message: self.videoControl,
+            buttons: {
+                Capture: {
+                    stayOpen: true,
+                    func: function ()
+                    {
+                        var videoControl = self.videoControl;
+                        var $videoControl = $(videoControl);
+                        var canvas = document.createElement("canvas");
+                        var context = canvas.getContext("2d");
+                        var height = $videoControl.height();
+                        var maxWidth = $videoControl.css("max-height").replace(/[^-\d\.]/g, '')
+                        var width = height < maxWidth ? $videoControl.width() : (maxWidth / .75);
+                        canvas.width = width;
+                        canvas.height = height;
+                        context.drawImage(videoControl, 0, 0, width, height);
+                        var data = canvas.toDataURL("image/png");
+                        uploader.addFile(new o.File(null, {
+                            name: "capture.png",
+                            data: data
+                        }));
+                        self.dialogClose("#CaptureDialog")
+                    }
+                },
+                Cancel: null
+            }
+        });
+        videoControl.play();
+    }
 
     self.applyTooltips = function ($container)
     {
@@ -686,14 +773,16 @@
         var extra = options.extra;
         var size = options.size || "small";
         var buttons = options.buttons;
+        var fixForm = options.fixForm;
         //var isStatic = options.isStatic;
 
         _pleaseWaiting = false;
 
         var selector = "#" + id;
-        if ($(selector).length == 0)
+        var $selector = $(selector);
+        if ($selector.length == 0)
         {
-            dialogHtml =
+            var dialogHtml =
   "<div class='modal fade' id='" + id + "' tabindex='-1' role='dialog' aria-labelledby='dialogTitle' aria-hidden='true'>"
 + "  <div class='modal-dialog'>"
 + "    <div class='modal-content'>"
@@ -716,6 +805,18 @@
 + "  </div>"
 + "</div>";
             $("body").append(dialogHtml);
+            var $selector = $(selector);
+        }
+        else if ($selector.hasClass("in"))
+        {
+            if ($selector.hasClass("fade"))
+            {
+                $selector.removeClass("fade").modal("hide").addClass("fade");
+            }
+            else
+            {
+                $selector.modal("hide");
+            }
         }
 
         $(selector + "Title").empty().append(title);
@@ -760,10 +861,10 @@
                 {
                     $button.click(function ()
                     {
-                        $(selector).off();
+                        $selector.off();
                         self.dialogClose(selector);
                     });
-                    $(selector).off();
+                    $selector.off();
                 }
                 else if (func.stayOpen)
                 {
@@ -784,15 +885,15 @@
                 {
                     $button.click(function ()
                     {
-                        $(selector).off().on("hidden.bs.modal", function ()
+                        $selector.off().on("hidden.bs.modal", function ()
                         {
-                            $(selector).off();
+                            $selector.off();
                             func();
                         });
                         self.dialogClose(selector);
                     });
                     // Last button is close action
-                    $(selector).off().on("hidden.bs.modal", function ()
+                    $selector.off().on("hidden.bs.modal", function ()
                     {
                         func();
                     });
@@ -801,15 +902,15 @@
                 {
                     $button.click(function ()
                     {
-                        $(selector).off().on("hidden.bs.modal", function ()
+                        $selector.off().on("hidden.bs.modal", function ()
                         {
-                            $(selector).off();
+                            $selector.off();
                             location.href = func;
                         });
                         self.dialogClose(selector);
                     });
                     // Last button is close action
-                    $(selector).off().on("hidden.bs.modal", function ()
+                    $selector.off().on("hidden.bs.modal", function ()
                     {
                         location.href = func;
                     });
@@ -822,18 +923,25 @@
 
         //if (isStatic)
         //{
-        //    $(selector).modal({ backdrop: "static" });
+        //    $selector.modal({ backdrop: "static" });
         //}
         //else
         //{
-        //    $(selector).modal({ backdrop: true });
+        //    $selector.modal({ backdrop: true });
         //}
-        //var bsModal = $(selector).data("bs.modal");
+        //var bsModal = $selector.data("bs.modal");
         //if (!(bsModal && bsModal.isShown))
         //{
-        //    $(selector).modal({ backdrop: "static" });
+        //    $selector.modal({ backdrop: "static" });
         //}
-        $(selector).modal({ backdrop: "static" });
+        if (fixForm)
+        {
+            $selector.on("shown.bs.modal", function ()
+            {
+                utilities.fixForm($("#" + id + "Message"), false);
+            });
+        }
+        $selector.modal({ backdrop: "static" });
     };
 
     self.dialogClose = function (selector)
@@ -988,11 +1096,10 @@
             {
                 $(collapsibles).show();
 
-                var $navbars = $(".nav-tabs, .autocollapsebar");
+                var $navbars = $(".nav-tabs:has(.autocollapse,.autocollapseImportant), .autocollapsebar");
                 $navbars.css("white-space", "nowrap").css("overflow", "hidden");
                 $navbars.children().filter("li").css("display", "inline-block").css("float", "none");
 
-                $navbars = $(".nav-tabs, .autocollapsebar");
                 $navbars.removeClass("squeeze");
                 $navbars.each(function ()
                 {
@@ -1028,7 +1135,7 @@
                     });
                 });
 
-                if (!$(".navbar-toggle").is(':visible'))
+                if (!$(".navbar-toggle").is(":visible"))
                 {
                     $navbars = $(".navbar");
                     $navbars.removeClass("squeeze");
@@ -1085,15 +1192,15 @@
                 setTimeout(navbarAutocollapse, navbarAutocollapseDelay);
             };
 
-            $(window).resize(navbarAutocollapse);
+            $(window).resize(self.navbarCollapse);
             navbarAutocollapse(50, 10, 2000);
         }
 
         if (navigator.userAgent.match(/IEMobile\/10\.0/))
         {
-            var msViewportStyle = document.createElement('style');
-            msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
-            document.querySelector('head').appendChild(msViewportStyle);
+            var msViewportStyle = document.createElement("style");
+            msViewportStyle.appendChild(document.createTextNode("@-ms-viewport{width:auto!important}"));
+            document.querySelector("head").appendChild(msViewportStyle);
         }
 
         $(window).bind("beforeunload", function ()

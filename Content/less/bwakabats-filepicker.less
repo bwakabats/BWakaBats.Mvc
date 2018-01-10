@@ -5,9 +5,12 @@ File Picker
 .filepicker {
     .filepicker-buttons {
         display: inline-block;
-        margin-left: -20px;
         vertical-align: middle;
         width: 0;
+
+        &.selected {
+            margin-left: -20px;
+        }
 
         button, .btn-group {
             margin-bottom: 4px;
@@ -29,12 +32,25 @@ File Picker
         background-color: @gray-lighter;
         max-width: 200px;
 
-        &[src=''] + .filepicker-buttons {
-            margin-left: 0;
+        &[src=''] {
+            display: none;
+
+            & + .filepicker-buttons {
+                margin-left: 0;
+            }
         }
     }
 }
 
 .imagePicker {
     cursor: pointer;
+}
+
+#CaptureDialogMessage {
+    text-align: center;
+
+    video {
+        width: 100%;
+        max-height: 480px;
+    }
 }

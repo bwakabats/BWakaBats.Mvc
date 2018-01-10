@@ -25,7 +25,6 @@ namespace BWakaBats.Bootstrap
         {
             tag.MergeAttribute("type", "url");
             tag.MergeAttribute("data-val-url", ValidationMessage("Invalid address", "Please enter a valid address"));
-            tag.AddCssClass("text-lower");
             return base.UpdateTag(tag) || true;
         }
     }

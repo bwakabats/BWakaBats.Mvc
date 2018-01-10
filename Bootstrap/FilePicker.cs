@@ -84,6 +84,12 @@ namespace BWakaBats.Bootstrap
             return (TControl)this;
         }
 
+        public TControl CanCapture(bool newValue = true)
+        {
+            Context.CanCapture = newValue;
+            return (TControl)this;
+        }
+
         #endregion
 
         protected override bool UpdateTag(TagBuilder tag)
@@ -103,26 +109,29 @@ namespace BWakaBats.Bootstrap
             string imageId = Context.Id + "_Image";
             string imageName = FullHtmlFieldName + "_Image";
             var img = new HtmlTagBuilder("img");
-            if (!string.IsNullOrWhiteSpace(imageId))
-            {
-                img.Attributes.Add("id", imageId);
-            }
-            if (!string.IsNullOrWhiteSpace(imageName))
-            {
-                img.Attributes.Add("name", imageName);
-            }
-            img.Attributes.Add("src", Context.FileName);
             img.AddCssClass("img-preview");
+            img.Attributes.Add("id", imageId);
+            img.Attributes.Add("name", imageName);
 
+            string selected;
+            if (!string.IsNullOrEmpty(Context.FileName))
+            {
+                img.Attributes.Add("src", Context.FileName);
+                selected = " selected";
+            }
+            else
+            {
+                selected = "";
+            }
             string output = tag.ToString()
                  + "<div class='filepicker'>"
                  + img.ToString()
-                 + "<div class='filepicker-buttons'>";
+                 + "<div class='filepicker-buttons" + selected + "'>";
 
             bool havePreAppend = Context.Append.Count > 0 || Context.Prepend.Count > 0;
             bool moreButtons = Context.CanRotate || Context.CanCrop || havePreAppend;
 
-            if (!moreButtons && Context.CanDelete)
+            if (!moreButtons && (Context.CanDelete || Context.CanCapture))
             {
                 output += "<div class='btn-group'>";
             }
@@ -144,6 +153,19 @@ namespace BWakaBats.Bootstrap
             }
 
             output += GetPreAppendString(Context.Prepend).ToString();
+
+            if (Context.CanCapture)
+            {
+                output += "    <span class='input-group-btn'>"
+                        + "      <button"
+                        + "        type='button' class='btn btn-info'"
+                        + "        data-file-capture-for='" + Context.Id + "'"
+                        + "        data-file-type='" + Context.FileType + "'"
+                        + "        title='Capture'>"
+                        + "<span class='fa fa-camera'></span>"
+                        + "      </button>"
+                        + "    </span>";
+            }
             if (Context.CanRotate)
             {
                 output += "    <span class='input-group-btn'>"
@@ -192,7 +214,7 @@ namespace BWakaBats.Bootstrap
                         + "      </button>"
                         + "    </span>";
             }
-            if (moreButtons || Context.CanDelete)
+            if (moreButtons || Context.CanDelete || Context.CanCapture)
             {
                 output += "    </div>"; // btn-group
             }
@@ -236,6 +258,7 @@ namespace BWakaBats.Bootstrap
         public bool CanRotate { get; internal set; }
         public bool CanCrop { get; internal set; }
         public bool CanDelete { get; internal set; } = true;
+        public bool CanCapture { get; internal set; } = true;
         public Button Button { get; internal set; }
     }
 

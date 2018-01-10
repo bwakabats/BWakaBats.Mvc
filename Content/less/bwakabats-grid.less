@@ -270,6 +270,34 @@ Moveable
             }
         }
 
+        &:first-child {
+            .grid-move-top, .grid-move-up {
+                cursor: @cursor-disabled;
+                .opacity(.65);
+                .box-shadow(none);
+
+                &:hover,
+                &:focus {
+                    color: @btn-link-disabled-color;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &:last-child {
+            .grid-move-bottom, .grid-move-down {
+                cursor: @cursor-disabled;
+                .opacity(.65);
+                .box-shadow(none);
+
+                &:hover,
+                &:focus {
+                    color: @btn-link-disabled-color;
+                    text-decoration: none;
+                }
+            }
+        }
+
         > .grid-move-bar {
             display: none;
             position: absolute;

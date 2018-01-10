@@ -114,6 +114,150 @@ var BootstrapGrid = function ($element)
         self._paginate($rows);
     };
 
+    self.attachMoveEvents = function ($moveableRows)
+    {
+        var url = self.$element.data("move-url");
+        var buttons = self.$element.data("move-buttons");
+
+        var isFunction = !/[^a-zA-Z0-9_]/.test(url) && (eval("typeof " + url + " === 'function'"));
+        var dragcounter = 0;
+        var draggingId = 0;
+        var draggingGroupId = undefined;
+
+        var htmlButtons = "<div class='grid-move-bar'><button type='button' class='btn btn-primary grid-move-btn grid-drag' title='Drag up or down'><span class='fa fa-arrows-v'></span></button>";
+        if (buttons == "all" || buttons.indexOf("top") > -1)
+        {
+            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-top' title='Move to top'><span class='fa fa-angle-double-up'></span></button>";
+        }
+        if (buttons == "all" || buttons.indexOf("up") > -1)
+        {
+            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-up' title='Move up'><span class='fa fa-angle-up'></span></button>";
+        }
+        if (buttons == "all" || buttons.indexOf("down") > -1)
+        {
+            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-down' title='Move down'><span class='fa fa-angle-down'></span></button>";
+        }
+        if (buttons == "all" || buttons.indexOf("bottom") > -1)
+        {
+            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-bottom' title='Move to bottom'><span class='fa fa-angle-double-down'></span></button></div>";
+        }
+        htmlButtons += "</div>";
+
+        $moveableRows
+            .prepend(htmlButtons)
+            .on("dragenter", function (event)
+            {
+                var $this = $(this);
+                event.preventDefault();
+                event.stopPropagation();
+                dragcounter++;
+                self.$element.find(".drag-over").removeClass("drag-over");
+                if (!$this.hasClass("dragging") && (draggingGroupId == null || $this.data("groupid") == draggingGroupId))
+                {
+                    $this.addClass("drag-over");
+                }
+            })
+            .on("dragleave", function (event)
+            {
+                var $this = $(this);
+                event.preventDefault();
+                event.stopPropagation();
+                dragcounter--;
+                if (dragcounter === 0)
+                {
+                    $this.removeClass("drag-over");
+                }
+            })
+            .on("dragover", function ()
+            {
+                var $this = $(this);
+                return draggingId == undefined || $this.hasClass("dragging") || (draggingGroupId != undefined && $this.data("groupid") != draggingGroupId);
+            })
+            .on("drop", function (event)
+            {
+                event.preventDefault();
+                event.stopPropagation();
+                dragcounter = 0;
+                self.$element.find(".drag-over").removeClass("drag-over");
+                var rowId = $(this).closest(".row").data("rowid");
+                if (isFunction)
+                {
+                    eval(url + "('" + encodeURIComponent(draggingId) + "','DragDrop','" + encodeURIComponent(rowId) + "')");
+                }
+                else
+                {
+                    location.href = url + "?id=" + encodeURIComponent(draggingId) + "&direction=DragDrop&dropId=" + encodeURIComponent(rowId);
+                }
+            });
+
+        $moveableRows.find(".grid-drag")
+            .prop("draggable", true)
+            .on("dragstart", function ()
+            {
+                $(".tooltip").hide();
+                var $row = $(this).closest(".row");
+                draggingId = $row.data("rowid");
+                draggingGroupId = (self.settings.groupColumn == -1 ? undefined : $row.data("groupid"));
+                $row.addClass("dragging");
+                self.$element.addClass('dragging');
+            })
+            .on("dragend", function ()
+            {
+                draggingId = undefined;
+                $(this).closest(".row").removeClass("dragging");
+                self.$element.removeClass('dragging');
+            });
+
+        $moveableRows.find(".grid-move-top").click(function ()
+        {
+            var rowId = $(this).closest(".row").data("rowid");
+            if (isFunction)
+            {
+                eval(url + "('" + encodeURIComponent(draggingId) + "','Top')");
+            }
+            else
+            {
+                location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Top";
+            }
+        });
+        $moveableRows.find(".grid-move-bottom").click(function ()
+        {
+            var rowId = $(this).closest(".row").data("rowid");
+            if (isFunction)
+            {
+                eval(url + "('" + encodeURIComponent(draggingId) + "','Bottom')");
+            }
+            else
+            {
+                location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Bottom";
+            }
+        });
+        $moveableRows.find(".grid-move-up").click(function ()
+        {
+            var rowId = $(this).closest(".row").data("rowid");
+            if (isFunction)
+            {
+                eval(url + "('" + encodeURIComponent(draggingId) + "','Up')");
+            }
+            else
+            {
+                location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Up";
+            }
+        });
+        $moveableRows.find(".grid-move-down").click(function ()
+        {
+            var rowId = $(this).closest(".row").data("rowid");
+            if (isFunction)
+            {
+                eval(url + "('" + encodeURIComponent(draggingId) + "','Down')");
+            }
+            else
+            {
+                location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Down";
+            }
+        });
+    }
+
     self.group = function ($clicked, index, expanded)
     {
         self.$element.find(".col-group").removeClass("col-group-ascending col-group-descending").addClass("col-group-none");
@@ -426,7 +570,7 @@ var BootstrapGrid = function ($element)
             var style = $column.data("total-style");
             if (style == "currency")
             {
-                $column.html("£" + result.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                $column.html("Â£" + result.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
             }
             else
             {
@@ -438,114 +582,7 @@ var BootstrapGrid = function ($element)
     var $moveableRows = self.$element.find("[data-rowid]");
     if ($moveableRows.length > 0)
     {
-        var $firstRow = $moveableRows.first();
-        var $lastRow = $moveableRows.last();
-
-        var url = self.$element.data("move-url");
-        var dragcounter = 0;
-        var draggingId = 0;
-        var draggingGroupId = undefined;
-
-        var buttons = self.$element.data("move-buttons");
-        var htmlButtons = "<div class='grid-move-bar'><button type='button' class='btn btn-primary grid-move-btn grid-drag' title='Drag up or down'><span class='fa fa-arrows-v'></span></button>";
-        if (buttons == "all" || buttons.indexOf("top") > -1)
-        {
-            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-top' title='Move to top'><span class='fa fa-angle-double-up'></span></button>";
-        }
-        if (buttons == "all" || buttons.indexOf("up") > -1)
-        {
-            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-up' title='Move up'><span class='fa fa-angle-up'></span></button>";
-        }
-        if (buttons == "all" || buttons.indexOf("down") > -1)
-        {
-            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-down' title='Move down'><span class='fa fa-angle-down'></span></button>";
-        }
-        if (buttons == "all" || buttons.indexOf("bottom") > -1)
-        {
-            htmlButtons += "<button type='button' class='btn btn-primary grid-move-btn grid-move-bottom' title='Move to bottom'><span class='fa fa-angle-double-down'></span></button></div>";
-        }
-        htmlButtons += "</div>";
-
-        $moveableRows
-            .prepend(htmlButtons)
-            .on("dragenter", function (event)
-            {
-                var $this = $(this);
-                event.preventDefault();
-                event.stopPropagation();
-                dragcounter++;
-                self.$element.find(".drag-over").removeClass("drag-over");
-                if (!$this.hasClass("dragging") && (draggingGroupId == null || $this.data("groupid") == draggingGroupId))
-                {
-                    $this.addClass("drag-over");
-                }
-            })
-            .on("dragleave", function (event)
-            {
-                var $this = $(this);
-                event.preventDefault();
-                event.stopPropagation();
-                dragcounter--;
-                if (dragcounter === 0)
-                {
-                    $this.removeClass("drag-over");
-                }
-            })
-            .on("dragover", function ()
-            {
-                var $this = $(this);
-                return draggingId == undefined || $this.hasClass("dragging") || (draggingGroupId != undefined && $this.data("groupid") != draggingGroupId);
-            })
-            .on("drop", function (event)
-            {
-                event.preventDefault();
-                event.stopPropagation();
-                dragcounter = 0;
-                self.$element.find(".drag-over").removeClass("drag-over");
-                var rowId = $(this).closest(".row").data("rowid");
-                location.href = url + "?id=" + encodeURIComponent(draggingId) + "&direction=DragDrop&dropId=" + encodeURIComponent(rowId);
-            });
-        $firstRow.find(".grid-move-top, .grid-move-up").prop("disabled", true);
-        $lastRow.find(".grid-move-bottom, .grid-move-down").prop("disabled", true);
-
-        self.$element.find(".grid-drag")
-            .prop("draggable", true)
-            .on("dragstart", function ()
-            {
-                $(".tooltip").hide();
-                var $row = $(this).closest(".row");
-                draggingId = $row.data("rowid");
-                draggingGroupId = (self.settings.groupColumn == -1 ? undefined : $row.data("groupid"));
-                $row.addClass("dragging");
-                self.$element.addClass('dragging');
-            })
-            .on("dragend", function ()
-            {
-                draggingId = undefined;
-                $(this).closest(".row").removeClass("dragging");
-                self.$element.removeClass('dragging');
-            });
-
-        self.$element.find(".grid-move-top").click(function ()
-        {
-            var rowId = $(this).closest(".row").data("rowid");
-            location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Top";
-        });
-        self.$element.find(".grid-move-bottom").click(function ()
-        {
-            var rowId = $(this).closest(".row").data("rowid");
-            location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Bottom";
-        });
-        self.$element.find(".grid-move-up").click(function ()
-        {
-            var rowId = $(this).closest(".row").data("rowid");
-            location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Up";
-        });
-        self.$element.find(".grid-move-down").click(function ()
-        {
-            var rowId = $(this).closest(".row").data("rowid");
-            location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Down";
-        });
+        self.attachMoveEvents($moveableRows);
     }
 
     var $automaticFilter;
