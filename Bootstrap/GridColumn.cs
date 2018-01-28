@@ -44,6 +44,13 @@ namespace BWakaBats.Bootstrap
         Count,
     }
 
+    public enum GridColumnSubtotal
+    {
+        None,
+        Prefix,
+        Suffix,
+    }
+
     public enum GridBooleanPlus
     {
         False,
@@ -113,6 +120,12 @@ namespace BWakaBats.Bootstrap
             return (TControl)this;
         }
 
+        public TControl Subtotal(GridColumnSubtotal newValue = GridColumnSubtotal.Prefix)
+        {
+            Context.Subtotal = newValue;
+            return (TControl)this;
+        }
+
         public TControl IsSortable(GridBooleanPlus newValue = GridBooleanPlus.True)
         {
             Context.IsSortable = newValue;
@@ -134,6 +147,30 @@ namespace BWakaBats.Bootstrap
         public TControl GroupsExpanded(GridGroupsExpanded newValue)
         {
             Context.GroupsExpanded = newValue;
+            return (TControl)this;
+        }
+
+        public TControl Prefix(Func<TRow, int, string> newValue)
+        {
+            Context.Prefix = newValue;
+            return (TControl)this;
+        }
+
+        public TControl Prefix(Func<TRow, string> newValue)
+        {
+            Context.Prefix = (row, rowIndex) => newValue(row);
+            return (TControl)this;
+        }
+
+        public TControl Suffix(Func<TRow, int, string> newValue)
+        {
+            Context.Suffix = newValue;
+            return (TControl)this;
+        }
+
+        public TControl Suffix(Func<TRow, string> newValue)
+        {
+            Context.Suffix = (row, rowIndex) => newValue(row);
             return (TControl)this;
         }
 
@@ -235,6 +272,10 @@ namespace BWakaBats.Bootstrap
             {
                 cell.MergeAttribute("data-total", context.Index.ToString(CultureInfo.InvariantCulture));
                 cell.MergeAttribute("data-total-type", context.Total.ToString().ToLowerInvariant());
+                if (context.Subtotal != GridColumnSubtotal.None)
+                {
+                    cell.MergeAttribute("data-total-sub", "true");
+                }
                 cell.MergeAttribute("data-total-style", context.Style.ToString().ToLowerInvariant());
             }
             bool hasData;
@@ -314,6 +355,7 @@ namespace BWakaBats.Bootstrap
         public string Tooltip { get; internal set; }
         public GridColumnStyle Style { get; internal set; }
         public GridColumnTotal Total { get; internal set; }
+        public GridColumnSubtotal Subtotal { get; internal set; }
         public GridBooleanPlus IsSortable { get; internal set; }
         public GridBooleanPlus IsFilterable { get; internal set; }
         public GridBooleanPlus IsGroupable { get; internal set; }
@@ -323,6 +365,8 @@ namespace BWakaBats.Bootstrap
     public class GridColumnContext<TRow> : GridColumnContext
     {
         public Func<TRow, int, object> Format { get; internal set; }
+        public Func<TRow, int, string> Prefix { get; internal set; }
+        public Func<TRow, int, string> Suffix { get; internal set; }
         public Func<TRow, int, string> Value { get; internal set; }
         public Func<TRow, int, object> HtmlAttributes { get; internal set; }
     }

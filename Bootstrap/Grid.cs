@@ -259,28 +259,28 @@ namespace BWakaBats.Bootstrap
 
                 rowTag = CreateRow(false, false, "", columns, rowName, columnClassPrefix, totalColumnWidth, page, rowHtmlAttributes, row, rowCount, rowId, c =>
                 {
-                    var format = c.Context.Format;
-                    if (format == null)
-                        return null;
-                    var cellValue = format(row, rowCount);
+                    string prefix = GetCellValue(c.Context.Prefix, row, rowCount, c.Context.Style == GridColumnStyle.Currency ? "&#163;" /*£*/ : "");
+                    object cellValue = GetCellValue(c.Context.Format, row, rowCount, null);
+                    string suffix = GetCellValue(c.Context.Suffix, row, rowCount, "");
+
                     if (cellValue == null)
-                        return null;
+                        return prefix + suffix;
 
                     switch (c.Context.Style)
                     {
                         case GridColumnStyle.Date:
-                            return Convert.ToDateTime(cellValue, CultureInfo.InvariantCulture).ToString("dd/MM/yy", CultureInfo.InvariantCulture);
+                            return prefix + Convert.ToDateTime(cellValue, CultureInfo.InvariantCulture).ToString("dd/MM/yy", CultureInfo.InvariantCulture) + suffix;
                         case GridColumnStyle.DateTime:
-                            return Convert.ToDateTime(cellValue, CultureInfo.InvariantCulture).ToString("dd/MM/yy HH:mm", CultureInfo.InvariantCulture);
+                            return prefix + Convert.ToDateTime(cellValue, CultureInfo.InvariantCulture).ToString("dd/MM/yy HH:mm", CultureInfo.InvariantCulture) + suffix;
                         case GridColumnStyle.Currency:
-                            return Convert.ToDecimal(cellValue, CultureInfo.InvariantCulture).ToString("£#,0.00", CultureInfo.InvariantCulture);
+                            return prefix + Convert.ToDecimal(cellValue, CultureInfo.InvariantCulture).ToString("#,0.00", CultureInfo.InvariantCulture) + suffix;
                         case GridColumnStyle.Boolean:
-                            return Convert.ToBoolean(cellValue, CultureInfo.InvariantCulture) ? AwesomeIcon.Check.Size(2).ToTag() : null;
+                            return prefix + (Convert.ToBoolean(cellValue, CultureInfo.InvariantCulture) ? AwesomeIcon.Check.Size(2).ToTag() : null) + suffix;
                         case GridColumnStyle.PercentageBar:
                             double percent = Convert.ToDouble(cellValue, CultureInfo.InvariantCulture);
-                            return "<div class='bar' style='width: " + percent + "%;'>&nbsp;</div>";
+                            return prefix + "<div class='bar' style='width: " + percent + "%;'>&nbsp;</div>" + suffix;
                     }
-                    return cellValue;
+                    return prefix + cellValue + suffix;
                 });
 
                 if (rowTag != null)
@@ -319,6 +319,11 @@ namespace BWakaBats.Bootstrap
             }
 
             return result.ToString();
+        }
+
+        private static T GetCellValue<T>(Func<TRow, int, T> func, TRow row, int rowIndex, T defaultValue)
+        {
+            return func == null ? defaultValue : func(row, rowIndex);
         }
 
         #region Static Methods
@@ -414,6 +419,7 @@ namespace BWakaBats.Bootstrap
             return CreateRowTag(className, page, rowId, innerHtml.ToString(), rowHtmlAttributes);
         }
 
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         private static void AddValueData(TagBuilder rowTag, TColumn[] columns, TRow row, int rowCount)
         {
@@ -575,6 +581,15 @@ namespace BWakaBats.Bootstrap
 
                 rowTag.MergeAttribute("data-sortvalue-" + context.Index, sortValue);
                 rowTag.MergeAttribute("data-filtervalue-" + context.Index, filterValue);
+                switch (context.Subtotal)
+                {
+                    case GridColumnSubtotal.Prefix:
+                        rowTag.MergeAttribute("data-subvalue-" + context.Index, context.Prefix(row, rowCount));
+                        break;
+                    case GridColumnSubtotal.Suffix:
+                        rowTag.MergeAttribute("data-subvalue-" + context.Index, context.Suffix(row, rowCount));
+                        break;
+                }
             }
         }
 

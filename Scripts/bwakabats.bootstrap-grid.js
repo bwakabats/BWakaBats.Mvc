@@ -101,10 +101,10 @@ var BootstrapGrid = function ($element)
         $rows.each(function ()
         {
             var $row = $(this);
-            var $filterValue = $row.attr(filterIndex)
+            var $filterValue = $row.attr(filterIndex);
             if ($filterValue == undefined)
             {
-                var $filterValue = $row.attr(sortIndex)
+                $filterValue = $row.attr(sortIndex);
             }
             $row.data("isFiltered", $filterValue.indexOf(value) == -1);
         });
@@ -119,7 +119,7 @@ var BootstrapGrid = function ($element)
         var url = self.$element.data("move-url");
         var buttons = self.$element.data("move-buttons");
 
-        var isFunction = !/[^a-zA-Z0-9_]/.test(url) && (eval("typeof " + url + " === 'function'"));
+        var isFunction = !/[^a-zA-Z0-9_]/.test(url) && eval("typeof " + url + " === 'function'");
         var dragcounter = 0;
         var draggingId = 0;
         var draggingGroupId = undefined;
@@ -256,7 +256,7 @@ var BootstrapGrid = function ($element)
                 location.href = url + "?id=" + encodeURIComponent(rowId) + "&direction=Down";
             }
         });
-    }
+    };
 
     self.group = function ($clicked, index, expanded)
     {
@@ -506,30 +506,20 @@ var BootstrapGrid = function ($element)
             var $column = $(this);
             var totalIndex = "data-sortvalue-" + $column.data("total");
             var type = $column.data("total-type");
+            var sub = $column.data("total-sub");
+            var subIndex = "data-subvalue-" + $column.data("total");
             var groupId = $column.parent().data("groupid");
 
-            var result;
-            switch (type)
-            {
-                case "min":
-                    result = Infinity;
-                    break;
-                case "max":
-                    result = -Infinity;
-                    break;
-                default:
-                    result = 0;
-                    break;
-            }
             var filter = "[data-page!=0][" + totalIndex + "]";
             if (groupId)
             {
                 filter += "[data-groupid=" + groupId + "]";
             }
-            var count = self.$element.find(filter).length;
-            if (type == "count")
+            var results = {};
+            var counts = {};
+            if (type == "count" && !sub)
             {
-                result = count;
+                results[""] = self.$element.find(filter).length;
             }
             else
             {
@@ -537,45 +527,76 @@ var BootstrapGrid = function ($element)
                 {
                     //if (this.attributes["data-page"].value == "0")
                     //    return;
-
+                    var subValue = sub ? this.attributes[subIndex].value : "";
                     var value = parseFloat(this.attributes[totalIndex].value);
+                    if (results[subValue] == undefined)
+                    {
+                        counts[subValue] = 0;
+                        switch (type)
+                        {
+                            case "min":
+                                results[subValue] = Infinity;
+                                break;
+                            case "max":
+                                results[subValue] = -Infinity;
+                                break;
+                            default:
+                                results[subValue] = 0;
+                                break;
+                        }
+                    }
+                    counts[subValue]++;
                     switch (type)
                     {
                         case "sum":
-                            result += value;
+                            results[subValue] += value;
                             break;
                         case "average":
-                            result += value;
+                            results[subValue] += value;
                             break;
                         case "min":
-                            if (value < result)
+                            if (value < results[subValue])
                             {
-                                result = value;
+                                results[subValue] = value;
                             }
                             break;
                         case "max":
-                            if (value > result)
+                            if (value > results[subValue])
                             {
-                                result = value;
+                                results[subValue] = value;
                             }
                             break;
                     }
                 });
-                if (type == "average" && count > 0)
-                {
-                    result /= count;
-                }
             }
 
             var style = $column.data("total-style");
-            if (style == "currency")
+            var html = "";
+            for (var index in results)
             {
-                $column.html("Â£" + result.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                var result = results[index];
+                if (type == "average" && counts[index] > 0)
+                {
+                    result /= counts[index];
+                }
+                if (html.length > 0)
+                {
+                    html += "</br>";
+                }
+                if (style != "currency")
+                {
+                    html += index + result;
+                }
+                else if (index == "")
+                {
+                    html += "&#163;" + result.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                }
+                else
+                {
+                    html += index + result.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                }
             }
-            else
-            {
-                $column.html(result);
-            }
+            $column.html(html);
         });
     };
 
