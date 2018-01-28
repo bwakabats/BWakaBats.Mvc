@@ -13,7 +13,7 @@
     -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Better auto-collapsing</releaseNotes>
+    <releaseNotes>Subtotals by prefix/suffix</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Bootstrap MVC</tags>
     <contentFiles>

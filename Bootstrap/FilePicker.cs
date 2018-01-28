@@ -161,7 +161,7 @@ namespace BWakaBats.Bootstrap
                         + "        type='button' class='btn btn-info'"
                         + "        data-file-capture-for='" + Context.Id + "'"
                         + "        data-file-type='" + Context.FileType + "'"
-                        + "        title='Capture'>"
+                        + "        title='Webcam Capture'>"
                         + "<span class='fa fa-camera'></span>"
                         + "      </button>"
                         + "    </span>";

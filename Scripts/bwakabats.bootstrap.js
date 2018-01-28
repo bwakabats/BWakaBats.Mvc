@@ -367,6 +367,7 @@
             var id = $this.attr("data-file-rotate-for");
             $this.click(function ()
             {
+                $(".tooltip").hide();
                 var $id = $("#" + id);
                 var guid = $id.val();
                 if (guid == "")
@@ -398,6 +399,7 @@
             var id = $this.attr("data-file-crop-for");
             $this.click(function ()
             {
+                $(".tooltip").hide();
                 var $id = $("#" + id);
                 var guid = $id.val();
                 if (guid == "")
@@ -410,7 +412,7 @@
         var $captureFor = $container.find("[data-file-capture-for]");
         if (_canCapture == false)
         {
-            $this.hide();
+            $captureFor.hide();
         }
         else
         {
@@ -420,35 +422,44 @@
                 var id = $this.attr("data-file-capture-for");
                 $this.click(function ()
                 {
-                    if (_canCapture == undefined)
+                    $(".tooltip").hide();
+                    var getUserMedia = Modernizr.prefixed("getUserMedia", navigator);
+                    if (!getUserMedia)
                     {
-                        var getUserMedia = Modernizr.prefixed("getUserMedia", navigator);
-                        if (getUserMedia)
+                        var mediaDevices = navigator.mediaDevices || navigator;
+                        getUserMedia = mediaDevices.getUserMedia ||
+                            mediaDevices.webkitGetUserMedia ||
+                            mediaDevices.mozGetUserMedia;
+                    }
+                    if (getUserMedia)
+                    {
+                        getUserMedia({ video: true }, function (stream)
                         {
-                            getUserMedia({ video: true }, function (stream)
+                            _canCapture = true;
+                            var videoControl = document.createElement("video");
+                            if (videoControl.srcObject == undefined)
                             {
-                                _canCapture = true;
-                                var videoControl = document.createElement("video");
                                 videoControl.src = window.URL.createObjectURL(stream);
-                                self.videoControl = videoControl
-                                self._capture(id);
-                            }, function ()
-                                {
-                                    $captureFor.hide();
-                                    self.message("Capture Failed", "Sorry, you cannot capture at this time.");
-                                    _canCapture = false;
-                                });
-                        }
-                        else
+                            }
+                            else
+                            {
+                                videoControl.srcObject = stream;
+                            }
+                            self.videoControl = videoControl
+                            self.captureStream = stream;
+                            self._capture(id);
+                        }, function ()
                         {
+                            _canCapture = false;
                             $captureFor.hide();
                             self.message("Capture Failed", "Sorry, you cannot capture at this time.");
-                            _canCapture = false;
-                        }
+                        });
                     }
-                    else if (_canCapture)
+                    else
                     {
-                        self._capture(id);
+                        _canCapture = false;
+                        $captureFor.hide();
+                        self.message("Capture Failed", "Sorry, you cannot capture at this time.");
                     }
                 });
             });
@@ -460,6 +471,7 @@
             var id = $this.attr("data-file-cancel-for");
             $this.click(function ()
             {
+                $(".tooltip").hide();
                 var $id = $("#" + id);
                 var guid = $id.val();
                 if (guid == "")
@@ -544,10 +556,19 @@
                             name: "capture.png",
                             data: data
                         }));
+                        videoControl.pause();
+                        videoControl.src = "";
+                        self.captureStream.getTracks()[0].stop();
                         self.dialogClose("#CaptureDialog")
                     }
                 },
-                Cancel: null
+                Cancel: function ()
+                {
+                    var videoControl = self.videoControl;
+                    videoControl.pause();
+                    videoControl.src = "";
+                    self.captureStream.getTracks()[0].stop();
+                }
             }
         });
         videoControl.play();
