@@ -120,7 +120,7 @@ namespace BWakaBats.Bootstrap
             return (TControl)this;
         }
 
-        public TControl Subtotal(GridColumnSubtotal newValue = GridColumnSubtotal.Prefix)
+        public TControl Subtotal(GridColumnSubtotal newValue)
         {
             Context.Subtotal = newValue;
             return (TControl)this;
@@ -355,7 +355,7 @@ namespace BWakaBats.Bootstrap
         public string Tooltip { get; internal set; }
         public GridColumnStyle Style { get; internal set; }
         public GridColumnTotal Total { get; internal set; }
-        public GridColumnSubtotal Subtotal { get; internal set; }
+        public GridColumnSubtotal Subtotal { get; internal set; } = GridColumnSubtotal.Prefix;
         public GridBooleanPlus IsSortable { get; internal set; }
         public GridBooleanPlus IsFilterable { get; internal set; }
         public GridBooleanPlus IsGroupable { get; internal set; }
