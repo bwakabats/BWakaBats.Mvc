@@ -584,10 +584,16 @@ namespace BWakaBats.Bootstrap
                 switch (context.Subtotal)
                 {
                     case GridColumnSubtotal.Prefix:
-                        rowTag.MergeAttribute("data-subvalue-" + context.Index, context.Prefix(row, rowCount));
+                        if (context.Prefix != null)
+                        {
+                            rowTag.MergeAttribute("data-subvalue-" + context.Index, context.Prefix(row, rowCount));
+                        }
                         break;
                     case GridColumnSubtotal.Suffix:
-                        rowTag.MergeAttribute("data-subvalue-" + context.Index, context.Suffix(row, rowCount));
+                        if (context.Suffix != null)
+                        {
+                            rowTag.MergeAttribute("data-subvalue-" + context.Index, context.Suffix(row, rowCount));
+                        }
                         break;
                 }
             }
