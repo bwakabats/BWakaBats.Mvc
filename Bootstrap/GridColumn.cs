@@ -209,7 +209,7 @@ namespace BWakaBats.Bootstrap
         #endregion
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        public virtual bool CreateCell(StringBuilder cells, object cellData, string columnClassPrefix, bool isHeader, bool isTotal, GridColumnContext context, object htmlAttributes)
+        public virtual bool CreateCell(StringBuilder cells, object cellData, string columnClassPrefix, bool isHeader, bool isTotal, GridColumnContext<TRow> context, object htmlAttributes)
         {
             var cell = new HtmlTagBuilder("div");
 
@@ -272,9 +272,20 @@ namespace BWakaBats.Bootstrap
             {
                 cell.MergeAttribute("data-total", context.Index.ToString(CultureInfo.InvariantCulture));
                 cell.MergeAttribute("data-total-type", context.Total.ToString().ToLowerInvariant());
-                if (context.Subtotal != GridColumnSubtotal.None)
+                switch (context.Subtotal)
                 {
-                    cell.MergeAttribute("data-total-sub", "true");
+                    case GridColumnSubtotal.Prefix:
+                        if (context.Prefix != null)
+                        {
+                            cell.MergeAttribute("data-total-sub", "true");
+                        }
+                        break;
+                    case GridColumnSubtotal.Suffix:
+                        if (context.Suffix != null)
+                        {
+                            cell.MergeAttribute("data-total-sub", "true");
+                        }
+                        break;
                 }
                 cell.MergeAttribute("data-total-style", context.Style.ToString().ToLowerInvariant());
             }
