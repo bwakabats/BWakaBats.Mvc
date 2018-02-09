@@ -53,6 +53,49 @@ namespace BWakaBats.Bootstrap
         public TControl MustMatch(string newValue)
         {
             Context.MustMatch = newValue;
+
+            var metadata = ModelMetadata.FromStringExpression(newValue, HtmlHelper.ViewData);
+            if (!string.IsNullOrWhiteSpace(metadata.ShortDisplayName) && metadata.ShortDisplayName != metadata.DisplayName)
+            {
+                Context.MustMatchDisplayName = metadata.ShortDisplayName;
+            }
+            else if (!string.IsNullOrWhiteSpace(metadata.DisplayName))
+            {
+                Context.MustMatchDisplayName = metadata.DisplayName;
+            }
+            else
+            {
+                Context.MustMatchDisplayName = newValue;
+            }
+
+            return (TControl)this;
+        }
+
+        public TControl MustMatchDisplayName(string newValue)
+        {
+            Context.MustMatchDisplayName = newValue;
+            return (TControl)this;
+        }
+
+        public TControl MustMatch<TModel, TProperty>(Expression<Func<TModel, TProperty>> newValue)
+        {
+            string name = ExpressionHelper.GetExpressionText(newValue);
+            Context.MustMatch = name;
+
+            var metadata = ModelMetadata.FromLambdaExpression(newValue, ((HtmlHelper<TModel>)HtmlHelper).ViewData);
+            if (!string.IsNullOrWhiteSpace(metadata.ShortDisplayName) && metadata.ShortDisplayName != metadata.DisplayName)
+            {
+                Context.MustMatchDisplayName = metadata.ShortDisplayName;
+            }
+            else if (!string.IsNullOrWhiteSpace(metadata.DisplayName))
+            {
+                Context.MustMatchDisplayName = metadata.DisplayName;
+            }
+            else
+            {
+                Context.MustMatchDisplayName = name;
+            }
+
             return (TControl)this;
         }
 
@@ -88,25 +131,7 @@ namespace BWakaBats.Bootstrap
 
             if (!string.IsNullOrWhiteSpace(Context.MustMatch))
             {
-                string name;
-                if (Context.MustMatch.Substring(0, 2) == "*.")
-                {
-                    name = Context.MustMatch.Substring(2);
-                }
-                else
-                {
-                    name = Context.MustMatch;
-                }
-                var metadata = ModelMetadata.FromStringExpression(name, HtmlHelper.ViewData);
-                if (!string.IsNullOrWhiteSpace(metadata.ShortDisplayName) && metadata.ShortDisplayName != metadata.DisplayName)
-                {
-                    name = metadata.ShortDisplayName;
-                }
-                else if (!string.IsNullOrWhiteSpace(metadata.DisplayName))
-                {
-                    name = metadata.DisplayName;
-                }
-                tag.MergeAttribute("data-val-equalto", ValidationMessage("Must be same", "Please enter the same value as the " + name.ToLowerInvariant() + ""));
+                tag.MergeAttribute("data-val-equalto", ValidationMessage("Must be same", "Please enter the same value as the " + Context.MustMatchDisplayName + ""));
                 result = tag.MergeNotNullAttribute("data-val-equalto-other", Context.MustMatch);
             }
 
@@ -129,6 +154,7 @@ namespace BWakaBats.Bootstrap
         public int MinLength { get; internal set; }
         public int MaxLength { get; internal set; } = int.MaxValue;
         public string MustMatch { get; internal set; }
+        public string MustMatchDisplayName { get; internal set; }
     }
 
 }

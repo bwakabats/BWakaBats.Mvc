@@ -13,7 +13,7 @@
     -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Subtotals by prefix/suffix (default to Prefix)</releaseNotes>
+    <releaseNotes>Improve CachedHttpHandler</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Bootstrap MVC</tags>
     <contentFiles>

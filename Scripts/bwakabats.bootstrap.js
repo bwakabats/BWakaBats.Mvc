@@ -826,7 +826,7 @@
 + "  </div>"
 + "</div>";
             $("body").append(dialogHtml);
-            var $selector = $(selector);
+            $selector = $(selector);
         }
         else if ($selector.hasClass("in"))
         {
@@ -864,23 +864,31 @@
         }
 
         var buttonCount = 0;
+        var buttonElementcount = $selector.find("button").length;
         for (var b in buttons)
         {
             buttonCount++;
         }
         for (var index = buttonCount + 1; index <= 5; index++)
         {
-            $(selector + "Button" + index).hide();
+            $selector.find("button").eq(buttonElementcount - index).hide();
         }
         for (var button in buttons)
         {
-            var $button = $(selector + "Button" + buttonCount).show().off();
-            $button.html(button);
+            var $buttonElement = $selector.find("Button").eq(buttonElementcount - buttonCount).show().off();
+            var buttonConfig = buttons[button];
+            var buttonLabel = (buttonConfig ? buttonConfig.label : null) || button;
+            $buttonElement.html(buttonLabel);
+
             (function (func)
             {
+                if (buttonConfig ? buttonConfig.hidden : false)
+                {
+                    $buttonElement.hide();
+                }
                 if (func == null)
                 {
-                    $button.click(function ()
+                    $buttonElement.click(function ()
                     {
                         $selector.off();
                         self.dialogClose(selector);
@@ -892,7 +900,7 @@
                     func = func.func;
                     if (typeof (func) == "function")
                     {
-                        $button.click(function ()
+                        $buttonElement.click(function ()
                         {
                             return func();
                         });
@@ -902,9 +910,10 @@
                         alert("func.func not a function");
                     }
                 }
-                else if (typeof (func) == "function")
+                else if (typeof (func) == "function" || typeof (func.func) == "function")
                 {
-                    $button.click(function ()
+                    func = func.func || func;
+                    $buttonElement.click(function ()
                     {
                         $selector.off().on("hidden.bs.modal", function ()
                         {
@@ -921,7 +930,7 @@
                 }
                 else // if (typeof (func) == "string")
                 {
-                    $button.click(function ()
+                    $buttonElement.click(function ()
                     {
                         $selector.off().on("hidden.bs.modal", function ()
                         {
@@ -936,7 +945,7 @@
                         location.href = func;
                     });
                 }
-            })(buttons[button]);
+            })(buttonConfig);
             buttonCount--;
             if (buttonCount == 0)
                 break;

@@ -22,7 +22,7 @@ namespace BWakaBats.Mvc
     /// </summary>
     public abstract class CachedHttpHandler : IHttpHandler
     {
-        private static Dictionary<string, object> _cache = new Dictionary<string, object>();
+        private static Dictionary<string, CachedItem> _cache = new Dictionary<string, CachedItem>();
 
         /// <summary>
         /// Gets a value indicating whether another request can use the JSHttpHandler instance.
@@ -46,17 +46,18 @@ namespace BWakaBats.Mvc
 
             string uri = request.Url.AbsoluteUri;
             string physicalPath = GetPhysicalPath(context);
+            DateTime contentModified;
             var fileInfo = new FileInfo(physicalPath);
+            contentModified = fileInfo.LastWriteTime;
             bool tooLarge;
 #if DEBUG || TEST
             tooLarge = true;
 #else
             tooLarge = fileInfo.Length > 10000000;
 
-            DateTime contentModified = fileInfo.LastWriteTime;
             contentModified = contentModified.AddTicks(-(contentModified.Ticks % TimeSpan.TicksPerSecond));
 
-            if (!IsContentModified(request.Headers["If-Modified-Since"], contentModified))
+            if (IsContentSame(request.Headers["If-Modified-Since"], contentModified))
             {
                 response.StatusCode = 304;
                 response.SuppressContent = true;
@@ -70,36 +71,37 @@ namespace BWakaBats.Mvc
             }
             else
             {
-                if (!_cache.TryGetValue(uri, out object content))
+                if (!_cache.TryGetValue(uri, out CachedItem cachedItem) || cachedItem.DateTimeLastModified != contentModified)
                 {
                     lock (_cache)
                     {
-                        if (!_cache.TryGetValue(uri, out content))
+                        if (!_cache.TryGetValue(uri, out cachedItem) || cachedItem.DateTimeLastModified != contentModified)
                         {
+                            cachedItem = new CachedItem()
+                            {
+                                DateTimeLastModified = contentModified,
+                            };
                             try
                             {
-                                content = Process(context, fileInfo, physicalPath);
+                                cachedItem.Content = Process(context, fileInfo, physicalPath);
                             }
                             catch { }
-                            _cache.Add(uri, content);
+                            _cache.Add(uri, cachedItem);
                         }
                     }
                 }
 
-                if (content is byte[] contentBytes)
+                if (cachedItem.Content is byte[] contentBytes)
                 {
                     response.BinaryWrite(contentBytes);
                 }
+                else if (cachedItem.Content is char[] contentChars)
+                {
+                    response.Write(contentChars, 0, contentChars.Length);
+                }
                 else
                 {
-                    if (content is char[] contentChars)
-                    {
-                        response.Write(contentChars, 0, contentChars.Length);
-                    }
-                    else
-                    {
-                        response.Write(content);
-                    }
+                    response.Write(cachedItem.Content);
                 }
             }
         }
@@ -117,17 +119,23 @@ namespace BWakaBats.Mvc
         }
 
 #if !DEBUG && !TEST
-        private static bool IsContentModified(string modifiedSince, DateTime serverFileLastModified)
+        private static bool IsContentSame(string modifiedSince, DateTime serverFileLastModified)
         {
             if (modifiedSince != null)
             {
                 if (DateTime.TryParse(modifiedSince, out DateTime clientFileLastModified))
                 {
-                    return clientFileLastModified < serverFileLastModified;
+                    return clientFileLastModified == serverFileLastModified;
                 }
             }
-            return true;
+            return false;
         }
 #endif
+
+        private class CachedItem
+        {
+            public DateTime DateTimeLastModified { get; set; }
+            public object Content { get; set; }
+        }
     }
 }

@@ -135,11 +135,11 @@ namespace BWakaBats.Bootstrap
             }
             else if (value.Length >= 5)
             {
-                foreground = (HexToNumber(value[0]) + HexToNumber(value[1]) + HexToNumber(value[2]) > 30) ? "333" : "FFF";
-            }
-            else if (value.Length >= 5)
-            {
                 foreground = (HexToNumber(value[0]) + HexToNumber(value[2]) * 2 + HexToNumber(value[4]) > 30) ? "333" : "FFF";
+            }
+            else if (value.Length >= 3)
+            {
+                foreground = (HexToNumber(value[0]) + HexToNumber(value[1]) + HexToNumber(value[2]) > 30) ? "333" : "FFF";
             }
             else
             {
