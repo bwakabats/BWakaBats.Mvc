@@ -77,16 +77,17 @@ namespace BWakaBats.Mvc
                     {
                         if (!_cache.TryGetValue(uri, out cachedItem) || cachedItem.DateTimeLastModified != contentModified)
                         {
-                            cachedItem = new CachedItem()
+                            if (cachedItem == null)
                             {
-                                DateTimeLastModified = contentModified,
-                            };
+                                cachedItem = new CachedItem();
+                                _cache.Add(uri, cachedItem);
+                            }
+                            cachedItem.DateTimeLastModified = contentModified;
                             try
                             {
                                 cachedItem.Content = Process(context, fileInfo, physicalPath);
                             }
                             catch { }
-                            _cache.Add(uri, cachedItem);
                         }
                     }
                 }

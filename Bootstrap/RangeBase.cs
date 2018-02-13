@@ -114,12 +114,12 @@ namespace BWakaBats.Bootstrap
                     }
                     else
                     {
-                        tag.MergeAttribute("data-val-range", ValidationMessage("" + Context.MinValue + " or less", "Please enter a value less than or equal to " + Context.MinValue + ""));
+                        tag.MergeAttribute("data-val-range", ValidationMessage("" + Context.MinValue + " or more", "Please enter a value greater than or equal to " + Context.MinValue + ""));
                     }
                 }
                 else
                 {
-                    tag.MergeAttribute("data-val-range", ValidationMessage("" + Context.MinValue + " or more", "Please enter a value greater than or equal to " + Context.MaxValue + ""));
+                    tag.MergeAttribute("data-val-range", ValidationMessage("" + Context.MaxValue + " or less", "Please enter a value less than or equal to " + Context.MaxValue + ""));
                 }
             }
             return base.UpdateTag(tag) || result;
