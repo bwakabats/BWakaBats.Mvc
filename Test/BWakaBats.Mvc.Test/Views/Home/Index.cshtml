@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@Html.BootstrapIconPicker("Icon")
+
+@Html.BootstrapIcon5Picker("Free").IsFree()
+
+@Html.BootstrapIcon5Picker("Pro")
+
+@Html.BootstrapIcon5Picker("None").OptionalLabel("(none)")
+
+@Html.BootstrapCheckBox("Check").Header("Check")
+@Html.BootstrapCheckBox("Radio").Header("Radio")
+@Html.BootstrapTextBox("TextBox").Header("TextBox")
+
+@{
+    var data = new string[]
+    {
+"Shane", "Julie", "Milly", "Poppy", "Dexter"
+    };
+    var grid = Html.BootstrapGrid(data);
+    var columns = grid.Context.Columns;
+    columns.Add("Name")
+        .IsSortable()
+        .IsFilterable()
+        .Format(row => row);
+    columns.Add("Group")
+        .IsSortable()
+        .IsFilterable()
+        .IsGroupable()
+        .Format((row, rowIndex) => rowIndex % 3);
+
+    var layout = new int[][]
+    {
+new int[] { 6,6 },
+new int[] { 6,6 },
+new int[] { 6,6 },
+new int[] { 6,6 },
+    };
+    @grid.Layout(layout)
+}

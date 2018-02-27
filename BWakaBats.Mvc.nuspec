@@ -13,13 +13,13 @@
     -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Improve CachedHttpHandler</releaseNotes>
+    <releaseNotes>New Icon5Picker</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Bootstrap MVC</tags>
     <contentFiles>
       <files include="Configurations\*.*" buildAction="Content" />
       <files include="Content\less\*.*" buildAction="Content" />
-      <files include="Scripts\*.*" buildAction="Content" />
+      <files include="Scripts\*.js" buildAction="Content" />
     </contentFiles>
     <dependencies>
       <dependency id="Bootstrap.v3.Datetimepicker" version="4.15.35.1" />

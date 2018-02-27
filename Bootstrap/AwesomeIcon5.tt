@@ -1,0 +1,97 @@
+﻿<#@ template  debug="false" hostSpecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="Newtonsoft.Json" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="Newtonsoft.Json.Linq" #> 
+<#@ include file="../icon5.ttinclude"#>
+// *****************************************************
+//               MVC EXPANSION - BOOTSTRAP
+//                  by  Shane Whitehead
+//                  bwakabats@gmail.com
+// *****************************************************
+//      The software is released under the GNU GPL:
+//          http://www.gnu.org/licenses/gpl.txt
+//
+// Feel free to use, modify and distribute this software
+// I only ask you to keep this comment intact.
+// Please contact me with bugs, ideas, modification etc.
+// *****************************************************
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+
+namespace BWakaBats.Bootstrap
+{
+    [GeneratedCode("Ignore for Code Analysis", "v1")]
+    public partial class AwesomeIcon5
+    {
+<#
+    foreach(var icon in icons)
+    {
+#>
+        public static AwesomeIcon5 <#=icon.EnumName#> = new AwesomeIcon5("<#=icon.WordName#>", "<#=icon.ClassName#>", "<#=icon.Keywords#>");
+<#
+    }
+#>
+
+        public static IEnumerable<AwesomeIcon5> All = new List<AwesomeIcon5>()
+        {
+<#
+    foreach(var icon in icons)
+    {
+#>
+            <#=icon.EnumName#>,
+<#
+    }
+#>
+        };
+
+        private static IDictionary<string, AwesomeIcon5> _lookup = new Dictionary<string, AwesomeIcon5>()
+        {
+<#
+    foreach(var icon in icons)
+    {
+#>
+            { "<#=icon.ClassName#>", <#=icon.EnumName#> },
+<#
+    }
+#>
+        };
+    }
+
+    [GeneratedCode("Ignore for Code Analysis", "v1")]
+    public partial class AwesomeIcon5Free
+    {
+<#
+    foreach(var icon in icons)
+    {
+        if (icon.IsFree)
+        {
+#>
+        public static AwesomeIcon5 <#=icon.EnumName#> = new AwesomeIcon5("<#=icon.WordName#>", "<#=icon.ClassName#>", "<#=icon.Keywords#>");
+<#
+        }
+    }
+#>
+
+        public static IEnumerable<AwesomeIcon5> All = new List<AwesomeIcon5>()
+        {
+<#
+    foreach(var icon in icons)
+    {
+        if (icon.IsFree)
+        {
+#>
+            <#=icon.EnumName#>,
+<#
+        }
+    }
+#>
+        };
+    }
+}

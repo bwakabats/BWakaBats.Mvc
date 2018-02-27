@@ -1,0 +1,81 @@
+/*
+Icon5 Picker
+==========================================================================
+*/
+.icon5picker-popup {
+    position: absolute;
+    top: @input-height-base;
+    left: 0;
+    margin: 0;
+    z-index: @zindex-modal+1;
+    display: none;
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-fallback-border; // IE8 fallback
+    border: 1px solid @dropdown-border;
+    border-radius: @border-radius-small;
+    .box-shadow(0 5px 15px rgba(0,0,0,.1));
+    background-clip: padding-box;
+    
+    .icon5picker-popup-header {
+        background: lighten(@dropdown-link-active-bg, 50%);
+        padding: 5px;
+
+        label {
+            margin-right: 10px;
+        }
+
+        text {
+        }
+    }
+
+    .icon5picker-popup-results {
+        padding: 5px;
+
+        span {
+            cursor: pointer;
+            padding: 2px;
+
+            &.optional {
+            }
+
+            &:hover {
+                background: lighten(@dropdown-link-active-bg, 20%);
+            }
+        }
+
+        &.icon-sm span {
+            font-size: 1.4em;
+        }
+
+        &.icon-md span {
+            font-size: 2em;
+        }
+
+        &.icon-lg span {
+            font-size: 3em;
+
+            &.small {
+                cursor: default;
+                font-size: 1.4em;
+
+                &:hover {
+                    background: none;
+                }
+            }
+        }
+    }
+}
+
+.input-group-btn > .icon5picker-popup {
+    width: 570px;
+    white-space: normal;
+}
+
+.btn-icon5picker + div + span {
+    color: lighten(@text-color, 50%);
+    margin-left: 10px;
+}
+
+.open > .icon5picker-popup {
+    display: block;
+}

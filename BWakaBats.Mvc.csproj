@@ -143,6 +143,16 @@
     <Compile Include="Attributes\PrependAttribute.cs" />
     <Compile Include="Attributes\PlaceholderAttribute.cs" />
     <Compile Include="Attributes\TooltipAttribute.cs" />
+    <Compile Include="Bootstrap\AwesomeIcon5.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AwesomeIcon5.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bootstrap\AwesomeIcon5LayerCounter.cs" />
+    <Compile Include="Bootstrap\AwesomeIcon5LayerText.cs" />
+    <Compile Include="Bootstrap\AwesomeIcon5_More.cs" />
+    <Compile Include="Bootstrap\IAwesomeIcon5Layer.cs" />
+    <Compile Include="Bootstrap\Icon5Picker.cs" />
     <Compile Include="Bootstrap\Location.cs" />
     <Compile Include="Bootstrap\ILocation.cs" />
     <Compile Include="Bootstrap\ImageMap.cs" />
@@ -211,6 +221,10 @@
     <Compile Include="Mvc\NamedRazorView.cs" />
     <Compile Include="Mvc\NamedRazorViewEngine.cs" />
     <Compile Include="Mvc\CssHttpHandler.cs" />
+    <Content Include="Bootstrap\AwesomeIcon5.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AwesomeIcon5.cs</LastGenOutput>
+    </Content>
     <Content Include="Configurations\FilterConfiguration.cs.pp" />
     <Content Include="Configurations\ViewEngineConfiguration.cs.pp" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -250,9 +264,14 @@
     <Content Include="Content\less\bwakabats-map.less" />
     <Content Include="Content\less\bwakabats.less" />
     <Content Include="Content\less\leaflet.awesome-markers.less" />
+    <None Include="Content\iconsFree.json" />
+    <None Include="Content\iconsPro.json" />
+    <Content Include="Content\less\bwakabats-iconpicker.less" />
+    <Content Include="Content\less\bwakabats-icon5picker.less" />
     <None Include="Custom.ruleset">
       <SubType>Designer</SubType>
     </None>
+    <None Include="icon5.ttinclude" />
     <None Include="Web.config.install.xdt" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -331,6 +350,16 @@
     <Content Include="Images\htmlbox\silk\undo.png" />
     <Content Include="Images\htmlbox\silk\unlink.png" />
     <CodeAnalysisDictionary Include="Properties\CustomDictionary.xml" />
+    <Content Include="Scripts\bwakabats.bootstrap-icon5picker.js" />
+    <Content Include="Scripts\bwakabats.bootstrap-icon5picker-metadata.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bwakabats.bootstrap-icon5picker-metadata.tt</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bwakabats.bootstrap-icon5picker-metadata.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>bwakabats.bootstrap-icon5picker-metadata.js</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bwakabats.bootstrap-colorpicker.js" />
     <Content Include="Scripts\bwakabats.bootstrap-filepicker.js" />
     <Content Include="Scripts\bwakabats.bootstrap-grid.js" />
@@ -352,6 +381,9 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>XCOPY "$(ProjectDir)Scripts\*.js" "$(ProjectDir)Test\BWakaBats.Mvc.Test\Scripts" /Y</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

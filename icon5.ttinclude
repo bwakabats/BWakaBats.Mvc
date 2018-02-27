@@ -1,0 +1,168 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".js" #><#
+    var metadataFileName = Host.ResolvePath(@"..\Content\iconsPro.json");
+    var jProIcons = JObject.Parse(File.ReadAllText(metadataFileName));
+    metadataFileName = Host.ResolvePath(@"..\Content\iconsFree.json");
+    var jFreeIcons = JObject.Parse(File.ReadAllText(metadataFileName));
+
+    var icons = new List<Icon>();
+    foreach(var jIcon in jProIcons)
+    {
+        var jStyles = jIcon.Value["styles"];
+        foreach(string style in jStyles)
+        {
+            Icon icon;
+            switch(style)
+            {
+                case "solid": 
+                    icon = new Icon(jIcon.Key, jIcon.Value, jFreeIcons[jIcon.Key], style, "fas", "", "");
+                    break;
+                case "regular": 
+                    icon = new Icon(jIcon.Key, jIcon.Value, jFreeIcons[jIcon.Key], style, "far", "Regular", " (Regular)");
+                    break;
+                case "light": 
+                    icon = new Icon(jIcon.Key, jIcon.Value, jFreeIcons[jIcon.Key], style, "fal", "Light", " (Light)");
+                    break;
+                case "brands":
+                    icon = new Icon(jIcon.Key, jIcon.Value, jFreeIcons[jIcon.Key], style, "fab", "", "");
+                    break;
+                default:
+                    throw new Exception("Unknown style on " + jIcon.Key + ": " + style);
+            }
+            icons.Add(icon);
+        }
+    }
+#><#+
+class Icon
+{
+    public Icon(string key, JToken jProIcon, JToken jFreeIcon, string style, string prefix, string enumSuffix, string wordSuffix)
+    {
+        ClassName = prefix + " fa-" + key;
+        string wordName = jProIcon["label"].ToString();
+        if (wordName.ToLowerInvariant() == wordName)
+        {
+            wordName = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(wordName);
+        }
+        WordName = wordName + wordSuffix;
+
+        string enumName = " " + key.Replace('-', ' ') + " ";
+        enumName = enumName.Replace(" alt ", " alternative ");
+        enumName = enumName.Replace(" h ", " horizontal ");
+        enumName = enumName.Replace(" v ", " vertical ");
+        enumName = enumName.Replace(" blogger ", " blogger square ");
+        enumName = enumName.Replace(" blogger square b ", " blogger ");
+        enumName = enumName.Replace(" bluetooth ", " bluetooth oval ");
+        enumName = enumName.Replace(" bluetooth oval b ", " bluetooth ");
+        enumName = enumName.Replace(" cc ", " credit card ");
+        enumName = enumName.Replace(" fonticons ", " fonticons square ");
+        enumName = enumName.Replace(" fonticons square fi ", " fonticons ");
+        enumName = enumName.Replace(" glide ", " glide square ");
+        enumName = enumName.Replace(" glide square g ", " glide ");
+        enumName = enumName.Replace(" goodreads ", " goodreads square ");
+        enumName = enumName.Replace(" goodreads square g ", " goodreads ");
+        enumName = enumName.Replace(" kickstarter ", " kickstarter square ");
+        enumName = enumName.Replace(" kickstarter square k ", " kickstarter ");
+        enumName = enumName.Replace(" linkedin ", " linkedin square ");
+        enumName = enumName.Replace(" linkedin square in ", " linkedin ");
+        enumName = enumName.Replace(" medium ", " medium square ");
+        enumName = enumName.Replace(" medium square m ", " medium ");
+        enumName = enumName.Replace(" stripe ", " stripe square ");
+        enumName = enumName.Replace(" stripe square s ", " stripe ");
+        enumName = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(enumName);
+        enumName = enumName.Replace(" ", "");
+        switch(enumName)
+        {
+            case "500Px": enumName = "FiveHundredPixels"; break;
+            case "Angellist": enumName = "AngelList"; break;
+            case "Angrycreative": enumName = "AngryCreative"; break;
+            case "AppStoreIos": enumName = "AppStoreIOS"; break;
+            case "Bimobject": enumName = "BimObject"; break;
+            case "Buromobelexperte": enumName = "BuromobelExperte"; break;
+            case "Buysellads": enumName = "BuySellAds"; break;
+            case "Codiepie": enumName = "CodiePie"; break;
+            case "Connectdevelop": enumName = "ConnectDevelop"; break;
+            case "Cpanel": enumName = "CPanel"; break;
+            case "Deviantart": enumName = "DeviantArt"; break;
+            case "Dochub":  enumName = "DocHub"; break;
+            case "Draft2digital":  enumName = "Draft2Digital"; break;
+            case "Expeditedssl":  enumName = "ExpeditedSsl"; break;
+            case "Freebsd":  enumName = "FreeBsd"; break;
+            case "Gitkraken":  enumName = "GitKraken"; break;
+            case "Gitlab":  enumName = "GitLab"; break;
+            case "H1":  enumName = "Heading1"; break;
+            case "H2":  enumName = "Heading2"; break;
+            case "H3":  enumName = "Heading3"; break;
+            case "Hubspot":  enumName = "HubSpot"; break;
+            case "Ioxhost":  enumName = "IoxHost"; break;
+            case "Itunes":  enumName = "ITunes"; break;
+            case "ItunesNote":  enumName = "ITunesNote"; break;
+            case "Jsfiddle":  enumName = "JsFiddle"; break;
+            case "Keycdn":  enumName = "KeyCdn"; break;
+            case "Lastfm":  enumName = "LastFm"; break;
+            case "LastfmSquare":  enumName = "LastFmSquare"; break;
+            case "Maxcdn": enumName = "MaxCDN"; break;
+            case "Medapps":  enumName = "MedApps"; break;
+            case "Medrt":  enumName = "MedRT"; break;
+            case "Ns8":  enumName = "NS8"; break;
+            case "Opencart":  enumName = "OpenCart"; break;
+            case "Openid":  enumName = "OpenID"; break;
+            case "Replyd":  enumName = "ReplySquare"; break;
+            case "shirtsinbulk":  enumName = "ShirtsInBulk"; break;
+            case "Studiovinari":  enumName = "StudioVinari"; break;
+            case "Stumbleupon":  enumName = "StumbleUpon"; break;
+            case "StumbleuponCircle":  enumName = "StumbleUponCircle"; break;
+            case "Th":  enumName = "Tile"; break;
+            case "ThLarge":  enumName = "TileLarge"; break;
+            case "ThList":  enumName = "TileList"; break;
+            case "Tripadvisor":  enumName = "TripAdvisor"; break;
+            case "Uikit":  enumName = "UIKit"; break;
+            case "UserMd":  enumName = "UserMD"; break;
+            case "Ussunnah":  enumName = "USSunnah"; break;
+            case "Vuejs":  enumName = "VueJS"; break;
+            case "Whatsapp":  enumName = "WhatsApp"; break;
+            case "WhatsappSquare":  enumName = "WhatsAppSquare"; break;
+            case "WikipediaW":  enumName = "Wikipedia"; break;
+            case "Wpbeginner":  enumName = "WPBeginner"; break;
+            case "Wpexplorer":  enumName = "WPExplorer"; break;
+            case "Wpforms":  enumName = "WPForms"; break;
+        }
+        EnumName = enumName + enumSuffix;
+
+        var jSearch = jProIcon["search"];
+        var jTerms = jSearch["terms"];
+
+        string keywords = "";
+        foreach(string term in jTerms)
+        {
+            if (keywords.Length > 0)
+            {
+                keywords += " ";
+            }
+            keywords += term;
+        }
+        Keywords = keywords;
+
+        if(jFreeIcon != null)
+        {
+            var jFreeStyles = jFreeIcon["styles"];
+            foreach(string freeStyle in jFreeStyles)
+            {
+                if(freeStyle == style)
+                {
+                    IsFree= true;
+                    break;
+                }
+            }
+        }
+    }
+
+    public string ClassName { get; }
+    public string WordName { get; }
+    public string EnumName { get; }
+    public string Keywords { get; }
+    public bool IsFree { get; }
+}
+#>

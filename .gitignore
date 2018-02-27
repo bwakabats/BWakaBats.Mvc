@@ -244,3 +244,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /nugetPublish.bat
+/Test/BWakaBats.Mvc.Test/Scripts/fontawesome-all.js

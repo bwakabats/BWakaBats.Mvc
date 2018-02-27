@@ -12,18 +12,18 @@
 // *****************************************************
 namespace BWakaBats.Bootstrap
 {
-    class PreAppenderString : IPreAppender
+    internal class PreAppenderString : IPreAppender
     {
-        internal string Value { get; set; }
+        private string _value;
 
         internal PreAppenderString(string value)
         {
-            Value = value;
+            _value = value;
         }
 
         public virtual string ToPreAppenderString()
         {
-            return "<span class='input-group-addon'>" + Value + "</span>";
+            return "<span class='input-group-addon'>" + _value + "</span>";
         }
     }
 }

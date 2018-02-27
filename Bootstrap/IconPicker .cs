@@ -218,7 +218,7 @@ namespace BWakaBats.Bootstrap
             }
             else
             {
-                popup = _popup.Replace("_OPTIONAL_", "<div class='icon-optional' onclick='javascript: $(\"#_ID_\").val(null);$(\"#_ID__ip\").removeClass().addClass(\"fa fa-fw fa-none\");window.isDirty=true;" + onClick + "'>" + optionalLabel + "</div>");
+                popup = _popup.Replace("_OPTIONAL_", "<div class='icon-optional' onclick='javascript: $(\"#_ID_\").val(null);$(\"#_ID__ip\").removeClass().addClass(\"fa fa-fw fa-times fa-none\");window.isDirty=true;" + onClick + "'>" + optionalLabel + "</div>");
             }
             popup = popup.Replace("_ONCLICK_", onClick);
             return popup.Replace("_ID_", id);

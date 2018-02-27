@@ -1,0 +1,23 @@
+﻿<#@ template  debug="false" hostSpecific="true" language="C#" #>
+<#@ output extension=".js" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="Newtonsoft.Json" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+<#@ include file="../icon5.ttinclude"#>
+var bootstrapIcon5PickerMetadata =
+[
+<#
+    foreach(var icon in icons)
+    {
+#>
+    { className: "<#=icon.ClassName#>", title: "<#=icon.WordName#>", keywords: "<#=icon.Keywords#>", isFree: <#=icon.IsFree.ToString().ToLower()#> },
+<#
+    }
+#>
+];

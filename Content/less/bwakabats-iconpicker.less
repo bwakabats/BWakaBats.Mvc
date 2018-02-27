@@ -1,0 +1,75 @@
+/*
+Icon Picker
+==========================================================================
+*/
+.iconpicker-popup {
+    position: absolute;
+    top: @input-height-base;
+    left: 0;
+    margin: 0;
+    padding: 3px 2px 2px 1px;
+    z-index: @zindex-modal+1;
+    display: none;
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-fallback-border; // IE8 fallback
+    border: 1px solid @dropdown-border;
+    border-radius: @border-radius-small;
+    .box-shadow(0 5px 15px rgba(0,0,0,.1));
+    background-clip: padding-box;
+
+    &.icon-large > div {
+        display: none;
+        font-size: 24px;
+
+        &.icon-fav {
+            display: inline-block;
+        }
+    }
+
+    &.icon-small > div {
+        display: inline-block;
+        font-size: 16px;
+    }
+
+    > div {
+        margin: 0 1px;
+        cursor: pointer;
+
+        &.icon-more,
+        &.icon-optional {
+            display: inline-block;
+            margin: 0 3px;
+            border: 1px solid @dropdown-fallback-border; // IE8 fallback
+            border: 1px solid @dropdown-border;
+            border-radius: @border-radius-small;
+            text-align: center;
+            width: (18em / 14 * 4);
+
+            &:hover {
+                background: @gray-lighter;
+            }
+        }
+
+        &:hover {
+            background: @gray-lighter;
+        }
+    }
+}
+
+.input-group-btn > .iconpicker-popup {
+    width: 570px;
+    white-space: normal;
+}
+
+.btn-iconpicker + div + span {
+    color: lighten(@text-color, 50%);
+    margin-left: 10px;
+}
+
+.open > .iconpicker-popup {
+    display: block;
+}
+
+.fa-none {
+    .opacity(.33);
+}

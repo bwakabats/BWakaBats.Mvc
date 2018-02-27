@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BWakaBats.Mvc", "BWakaBats.Mvc.csproj", "{09FCA913-9DE9-4C64-B957-CC299CEDB6CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BWakaBats.Mvc.Test", "Test\BWakaBats.Mvc.Test\BWakaBats.Mvc.Test.csproj", "{370E0317-85FA-468E-B581-C4296BCEB71A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,8 +20,17 @@ Global
 		{09FCA913-9DE9-4C64-B957-CC299CEDB6CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09FCA913-9DE9-4C64-B957-CC299CEDB6CE}.Test|Any CPU.ActiveCfg = Test|Any CPU
 		{09FCA913-9DE9-4C64-B957-CC299CEDB6CE}.Test|Any CPU.Build.0 = Test|Any CPU
+		{370E0317-85FA-468E-B581-C4296BCEB71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{370E0317-85FA-468E-B581-C4296BCEB71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{370E0317-85FA-468E-B581-C4296BCEB71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{370E0317-85FA-468E-B581-C4296BCEB71A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{370E0317-85FA-468E-B581-C4296BCEB71A}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{370E0317-85FA-468E-B581-C4296BCEB71A}.Test|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1427EC0-C619-4B87-A13F-32BB6B09C048}
 	EndGlobalSection
 EndGlobal

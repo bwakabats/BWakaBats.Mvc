@@ -146,38 +146,12 @@ Column
     }
 }
 /*
-Sorting
-==========================================================================
-*/
-.col-sort {
-    .fa-icon();
-    cursor: pointer;
-    margin-right: 4px;
-}
-
-.col-sort.col-sort-none:before {
-    content: @fa-var-sort;
-}
-
-.col-sort.col-sort-ascending:before {
-    content: @fa-var-sort-amount-asc;
-}
-
-.col-sort.col-sort-descending:before {
-    content: @fa-var-sort-amount-desc;
-}
-/*
 Filtering
 ==========================================================================
 */
 .col-filter {
-    .fa-icon();
     cursor: pointer;
     margin-right: 4px;
-
-    &:before {
-        content: @fa-var-filter;
-    }
 }
 
 .col-filter-input {
@@ -205,21 +179,8 @@ Grouping
 ==========================================================================
 */
 .col-group {
-    .fa-icon();
     cursor: pointer;
     margin-right: 4px;
-}
-
-.col-group.col-group-none:before {
-    content: @fa-var-list;
-}
-
-.col-group.col-group-ascending:before {
-    content: @fa-var-indent;
-}
-
-.col-group.col-group-descending:before {
-    content: @fa-var-outdent;
 }
 
 .grid-group {
@@ -228,28 +189,9 @@ Grouping
     color: white;
     font-size: 1.5em;
 
-    &.grid-group-expanded {
-        div {
-            cursor: pointer;
-            margin-right: 4px;
-
-            &:before {
-                .fa-icon();
-                content: @fa-var-chevron-circle-down;
-            }
-        }
-    }
-
-    &.grid-group-collapsed {
-        div {
-            cursor: pointer;
-            margin-right: 4px;
-
-            &:before {
-                .fa-icon();
-                content: @fa-var-chevron-circle-right;
-            }
-        }
+    div {
+        cursor: pointer;
+        margin-right: 4px;
     }
 }
 
